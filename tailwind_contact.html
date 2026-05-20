@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Hot 'N Sizzle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind_navbar.js"></script>
+    <link rel="stylesheet" href="all.min.css">
+    <style>
+        * {  padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #0d0d0d; 
+            font-family: 'Inter', sans-serif; 
+            color: white; 
+        }
+        
+        /* Hero gradient animation */
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(234, 88, 12, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+        }
+        
+        /* Card hover effects */
+        .contact-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .contact-card:hover {
+            transform: translateY(-8px);
+            border-color: #ea580c;
+            box-shadow: 0 20px 40px rgba(234, 88, 12, 0.15);
+        }
+        
+        /* Icon circle animation */
+        .icon-circle {
+            transition: all 0.3s ease;
+        }
+        .contact-card:hover .icon-circle {
+            background: #ea580c;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(234, 88, 12, 0.5);
+        }
+        .contact-card:hover .icon-circle i {
+            color: white;
+        }
+        
+        /* Text reveal on hover */
+        .contact-card .label-text {
+            transition: color 0.3s ease;
+        }
+        .contact-card:hover .label-text {
+            color: #ea580c;
+        }
+        
+        /* Link hover effects */
+        .contact-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .contact-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ea580c;
+            transition: width 0.3s ease;
+        }
+        .contact-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Map container */
+        .map-container {
+            position: relative;
+            overflow: hidden;
+        }
+        .map-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 4px solid transparent;
+            border-radius: 1.5rem;
+            transition: border-color 0.4s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .map-container:hover::before {
+            border-color: #ea580c;
+        }
+        
+        /* Map iframe filter */
+        .map-iframe {
+            filter: grayscale(100%) invert(92%) contrast(1.2);
+            transition: filter 0.4s ease;
+        }
+        .map-container:hover .map-iframe {
+            filter: grayscale(50%) invert(92%) contrast(1.1);
+        }
+        
+        /* Facebook button */
+        .fb-btn {
+            transition: all 0.3s ease;
+        }
+        .fb-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(24, 119, 242, 0.4);
+        }
+        
+        /* Scroll animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-left {
+            animation: slideInLeft 0.6s ease-out forwards;
+        }
+        .animate-right {
+            animation: slideInRight 0.6s ease-out forwards;
+        }
+        .animate-up {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+        
+        /* Stagger delays */
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        
+        /* Hours grid hover */
+        .hours-item {
+            transition: all 0.3s ease;
+        }
+        .hours-item:hover {
+            background: rgba(234, 88, 12, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            margin: -0.5rem;
+        }
+        
+        /* Pulse animation for phone */
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(234, 88, 12, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+        }
+        
+        .pulse-icon {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        /* Scroll reveal for JS */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-32 pb-16 px-8 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-orange-600 rounded-full filter blur-[120px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-red-600 rounded-full filter blur-[120px]"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-black italic text-orange-500 uppercase tracking-tighter mb-4 drop-shadow-lg animate-up">
+                Get In Touch
+            </h1>
+            <p class="text-zinc-400 uppercase tracking-[0.3em] text-sm font-bold animate-up delay-100 opacity-0" style="animation-fill-mode: forwards;">
+                We're ready to serve you at Pasacao
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12 px-8 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- Contact Info Cards -->
+            <div class="space-y-6 animate-left" style="animation-fill-mode: forwards;">
+                
+                <!-- Operating Hours -->
+                <div class="contact-card bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 scroll-reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="icon-circle w-14 h-14 bg-orange-600/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-clock text-orange-500 text-xl transition-colors"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-display text-2xl font-black text-white mb-4 uppercase tracking-tight">Operating Hours</h2>
+                            <div class="grid grid-cols-2 gap-4 text-base">
+                                <div class="hours-item">
+                                    <p class="label-text text-xs text-zinc-500 uppercase font-bold tracking-widest mb-1">Mon - Thu</p>
+                                    <p class="font-bold text-lg">10:00 AM – 10:00 PM</p>
+                                </div>
+                                <div class="hours-item">
+                                    <p class="label-text text-xs text-zinc-500 uppercase font-bold tracking-widest mb-1">Fri - Sat</p>
+                                    <p class="font-bold text-lg">11:00 AM – 11:00 PM</p>
+                                </div>
+                                <div class="hours-item">
+                                    <p class="label-text text-xs text-zinc-500 uppercase font-bold tracking-widest mb-1">Sunday</p>
+                                    <p class="font-bold text-lg">12:00 PM – 9:00 PM</p>
+                                </div>
+                                <div class="hours-item">
+                                    <p class="label-text text-xs text-zinc-500 uppercase font-bold tracking-widest mb-1">Holidays</p>
+                                    <p class="font-bold text-lg text-orange-400">Hours may vary</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div class="contact-card bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 scroll-reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="icon-circle w-14 h-14 bg-orange-600/10 rounded-2xl flex items-center justify-center flex-shrink-0 pulse-icon">
+                            <i class="fas fa-phone text-orange-500 text-xl transition-colors"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-display text-2xl font-black text-white mb-2 uppercase tracking-tight">Call or Text</h2>
+                            <a href="tel:09298649669" class="contact-link text-3xl font-bold text-white hover:text-orange-500 transition-colors block mb-2">
+                                0929 864 9669
+                            </a>
+                            <p class="text-zinc-500 text-sm">Available during operating hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="contact-card bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 scroll-reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="icon-circle w-14 h-14 bg-orange-600/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-orange-500 text-xl transition-colors"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-display text-2xl font-black text-white mb-2 uppercase tracking-tight">Email Us</h2>
+                            <a href="mailto:hotnsizzle.pasacao@gmail.com" class="contact-link text-lg font-bold text-white hover:text-orange-500 transition-colors block mb-2">
+                                hotnsizzle.pasacao@gmail.com
+                            </a>
+                            <p class="text-zinc-500 text-sm">For reservations & inquiries</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="contact-card bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 scroll-reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="icon-circle w-14 h-14 bg-orange-600/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-orange-500 text-xl transition-colors"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-display text-2xl font-black text-white mb-2 uppercase tracking-tight">Our Location</h2>
+                            <p class="text-lg font-bold text-white mb-2">Pasacao Main Road, Camarines Sur</p>
+                            <p class="text-zinc-500 text-sm mb-4">Located along the highway, easy to spot with our signature orange signage</p>
+                            
+                            <!-- Quick Directions Button -->
+                            <a href="https://maps.google.com/?q=Hot+n+Sizzle+Pasacao+Camarines+Sur" target="_blank" class="inline-flex items-center gap-2 text-orange-500 font-bold text-sm uppercase tracking-wider hover:text-white transition-colors group">
+                                <span>Get Directions</span>
+                                <i class="fas fa-external-link-alt transform group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social -->
+                <div class="contact-card bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 scroll-reveal">
+                    <div class="flex items-start gap-6">
+                        <div class="icon-circle w-14 h-14 bg-orange-600/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-facebook-f text-orange-500 text-xl transition-colors"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h2 class="font-display text-2xl font-black text-white mb-4 uppercase tracking-tight">Follow Our Journey</h2>
+                            <a href="https://web.facebook.com/profile.php?id=61559711830119" target="_blank" class="fb-btn inline-flex items-center bg-[#1877f2] hover:bg-[#166fe5] px-6 py-3 rounded-xl transition font-black uppercase text-sm italic text-white">
+                                <i class="fab fa-facebook-f mr-3 text-xl"></i> 
+                                <span>Hot 'N Sizzle Facebook</span>
+                            </a>
+                            <p class="text-zinc-500 text-xs mt-3">Stay updated with promos and new menu items</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Map -->
+            <div class="animate-right scroll-reveal" style="animation-fill-mode: forwards;">
+                <div class="map-container rounded-3xl overflow-hidden border-4 border-zinc-800 shadow-2xl h-full min-h-[500px] bg-zinc-900">
+                    <iframe 
+                        src="https://maps.google.com/maps?q=Hot%20n%20Sizzle%20Pasacao%20Camarines%20Sur&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                        class="map-iframe w-full h-full" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy">
+                    </iframe>
+                    
+                    <!-- Map Overlay Info -->
+                    <div class="absolute bottom-6 left-6 right-6 bg-black/80 backdrop-blur-sm p-4 rounded-xl border border-orange-600/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-pin text-white"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-white text-sm">Hot 'N Sizzle Grill & Restaurant</p>
+                                <p class="text-zinc-400 text-xs">Open now · Closes 10 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Quick Actions -->
+    <section class="py-16 px-8 bg-gradient-to-b from-transparent via-orange-600/5 to-transparent">
+        <div class="max-w-4xl mx-auto text-center scroll-reveal">
+            <h3 class="text-2xl font-black text-white mb-8 uppercase tracking-wider">Quick Actions</h3>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="tel:09298649669" class="px-8 py-4 bg-orange-600 text-white font-bold uppercase tracking-wider rounded-full hover:bg-white hover:text-orange-600 transition-all duration-300 hover:shadow-[0_0_30px_rgba(234,88,12,0.4)] flex items-center gap-3">
+                    <i class="fas fa-phone"></i>
+                    <span>Call Now</span>
+                </a>
+                <a href="tailwind_order.html" class="px-8 py-4 border-2 border-orange-600 text-orange-500 font-bold uppercase tracking-wider rounded-full hover:bg-orange-600 hover:text-white transition-all duration-300 flex items-center gap-3">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Reserve Table</span>
+                </a>
+                <a href="https://maps.google.com/?q=Hot+n+Sizzle+Pasacao+Camarines+Sur" target="_blank" class="px-8 py-4 border-2 border-zinc-600 text-zinc-400 font-bold uppercase tracking-wider rounded-full hover:border-orange-600 hover:text-orange-500 transition-all duration-300 flex items-center gap-3">
+                    <i class="fas fa-directions"></i>
+                    <span>Directions</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 px-8 border-t border-zinc-800 text-center">
+        <div class="flex justify-center space-x-4 mb-6">
+            <a href="https://web.facebook.com/profile.php?id=61559711830119" target="_blank" class="w-12 h-12 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:bg-orange-600 hover:text-white transition-all duration-300 hover:scale-110">
+                <i class="fab fa-facebook-f text-lg"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hotnsizzle.pasacao@gmail.com" target="_blank" class="w-12 h-12 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:bg-orange-600 hover:text-white transition-all duration-300 hover:scale-110">
+            <i class="fas fa-envelope"></i>
+            </a>
+            <a href="tel:+639298649669" 
+            class="w-12 h-12 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:bg-orange-600 hover:text-white transition-all duration-300 hover:scale-110 shadow-lg">
+            <i class="fas fa-phone text-lg"></i>
+            </a>
+        </div>
+        <p class="text-zinc-500 text-sm font-bold uppercase tracking-[0.2em]">© 2026 HOT 'N SIZZLE GRILL & RESTAURANT. EST 2024.</p>
+    </footer>
+
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

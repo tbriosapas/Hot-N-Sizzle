@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Hot 'N Sizzle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind_navbar.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #0d0d0d; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; 
+            color: white; 
+        }
+        
+        /* Hero parallax effect */
+        .hero-section {
+            background: linear-gradient(to bottom, rgba(128, 0, 0, 0.85), rgba(255, 69, 0, 0.3)), 
+                        url('covernologo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        
+        /* Text reveal animation */
+        @keyframes revealUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .reveal-text {
+            animation: revealUp 0.8s ease-out forwards;
+        }
+        
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-400 { animation-delay: 0.4s; }
+        
+        /* Hover lift effect */
+        .hover-lift {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(234, 88, 12, 0.2);
+        }
+        
+        /* Image frame animation */
+        .image-frame {
+            position: relative;
+        }
+        .image-frame::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: 15px;
+            bottom: 15px;
+            border: 3px solid #ea580c;
+            border-radius: 1rem;
+            z-index: -1;
+            transition: all 0.4s ease;
+        }
+        .image-frame:hover::before {
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border-color: #dc2626;
+        }
+        
+        /* Quote styling */
+        .quote-text {
+            font-family: 'Playfair Display', serif;
+            position: relative;
+        }
+        .quote-text::before {
+            content: '"';
+            font-size: 4rem;
+            color: #ea580c;
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            opacity: 0.3;
+            font-style: italic;
+        }
+        
+        /* Timeline connector */
+        .timeline-connector {
+            position: relative;
+        }
+        .timeline-connector::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -50%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ea580c, transparent);
+            transform: translateY(-50%);
+        }
+        
+        /* Generation card hover */
+        .gen-card {
+            transition: all 0.3s ease;
+        }
+        .gen-card:hover {
+            transform: translateY(-5px) scale(1.05);
+        }
+        .gen-card:hover .gen-icon {
+            animation: bounce 0.6s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Arrow animation */
+        .arrow-pulse {
+            animation: pulseArrow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseArrow {
+            0%, 100% { opacity: 0.6; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(5px); }
+        }
+        
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Button glow */
+        .btn-glow {
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(234, 88, 12, 0.5);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero-section relative py-32 px-8 overflow-hidden flex items-center justify-center text-center min-h-[70vh]">
+        <div class="max-w-4xl relative z-10">
+            <h1 class="text-6xl md:text-8xl font-black italic text-orange-600 uppercase tracking-tighter mb-6 drop-shadow-[0_4px_4px_rgba(0,0,0,1)] reveal-text">
+                Our Story
+            </h1>
+            <p class="text-xl md:text-3xl font-bold uppercase tracking-widest text-white reveal-text delay-200 opacity-0" style="animation-fill-mode: forwards;">
+                From Family Traditions to Sizzling Plates
+            </p>
+            
+            <!-- Scroll indicator -->
+             <div class="mt-6 animate-bounce">
+    <i class="fas fa-chevron-down text-orange-500 text-2xl"></i>
+  </div>
+        </div>
+        
+        <!-- Floating emojis -->
+        <div class="absolute top-20 left-10 text-4xl opacity-20 animate-pulse">🔥</div>
+        <div class="absolute bottom-32 right-20 text-5xl opacity-20 animate-pulse" style="animation-delay: 1s;">🌶️</div>
+        <div class="absolute top-40 right-10 text-3xl opacity-20 animate-pulse" style="animation-delay: 2s;">🍖</div>
+    </section>
+
+    <!-- Main Story Section -->
+    <section class="py-24 px-8 md:px-24 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <!-- Image Side -->
+            <div class="scroll-reveal image-frame order-2 lg:order-1">
+                <div class="bg-zinc-900 h-[500px] rounded-2xl overflow-hidden shadow-2xl relative group">
+                    <!-- Placeholder for family photo -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-zinc-800 to-zinc-900 flex items-center justify-center">
+                        <div class="text-center p-8 border-2 border-dashed border-zinc-700 rounded-xl group-hover:border-orange-600 transition-colors duration-500">
+                            <span class="text-orange-500 text-6xl mb-4 block animate-pulse">👨‍🍳</span>
+                            <p class="text-zinc-500 font-black uppercase tracking-widest text-sm">Family Kitchen Photo</p>
+                            <p class="text-zinc-600 text-xs mt-2">The heart of Hot 'N Sizzle</p>
+                        </div>
+                    </div>
+                    <!-- Overlay on hover -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-orange-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Text Side -->
+            <div class="space-y-8 scroll-reveal order-1 lg:order-2">
+                <h2 class="text-4xl md:text-5xl font-black italic text-orange-500 uppercase tracking-tight border-l-8 border-orange-600 pl-6 hover-lift p-4 rounded-r-xl">
+                    Passion Across Generations
+                </h2>
+                
+                <div class="text-zinc-300 text-lg leading-relaxed space-y-6">
+                    <p class="scroll-reveal">
+                        Sa pamilya namin, lahat ay marunong magluto. Mula sa aming mga <span class="text-orange-400 font-semibold">Lolo at Lola</span>, hanggang sa aming mga magulang, at ngayon, naipasa na sa aming henerasyon ng magpipinsan.
+                    </p>
+                    <p class="scroll-reveal">
+                        Ang aming owner ay nagkaroon ng inspirasyon: <span class="text-orange-400 font-semibold italic">"Bakit hindi natin gawing business ang husay ng pamilya sa kusina?"</span> Doon nagsimula ang pangarap na magkaroon ng sariling source of income habang ibinibida ang lasang kinalakihan namin.
+                    </p>
+                    
+                    <!-- Quote Box -->
+                    <div class="bg-gradient-to-r from-orange-600/20 to-red-600/20 border-l-4 border-orange-500 p-6 rounded-r-xl my-8 hover-lift">
+                        <p class="quote-text text-white italic text-xl font-bold pl-4">
+                            Dito sa Hot 'N Sizzle, hindi lang kami basta empleyado—kami ay isang pamilya.
+                        </p>
+                    </div>
+                    
+                    <p class="scroll-reveal">
+                        Kaya naman sa bawat serving namin, lasap ninyo ang <span class="text-orange-400 font-semibold">pagmamahal at tradisyon</span> na nagmula pa sa aming mga ninuno.
+                    </p>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="pt-4 scroll-reveal">
+                    <a href="tailwind_menu.html" class="inline-flex items-center gap-3 px-8 py-4 bg-orange-600 text-white font-black uppercase tracking-wider rounded-full btn-glow">
+                        <span>Explore Our Menu</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Generations Timeline -->
+    <section class="py-24 px-8 bg-gradient-to-b from-[#0d0d0d] via-[#4a0000]/30 to-[#0d0d0d] relative overflow-hidden">
+        <!-- Background flame effect -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-1/4 w-64 h-64 bg-orange-600 rounded-full filter blur-[100px]"></div>
+            <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-red-600 rounded-full filter blur-[100px]"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <h3 class="text-3xl md:text-4xl font-black uppercase tracking-[0.2em] text-orange-500 mb-16 text-center scroll-reveal">
+                The Generations
+            </h3>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12">
+                
+                <!-- Generation 1 -->
+                <div class="gen-card text-center p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 hover:border-orange-600 scroll-reveal">
+                    <div class="gen-icon text-5xl mb-4">👴👵</div>
+                    <p class="font-black text-white uppercase tracking-wider mb-1">Roots</p>
+                    <p class="text-zinc-500 text-sm italic">Lolo & Lola</p>
+                    <p class="text-orange-600 text-xs mt-2 font-bold">The Foundation</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="text-orange-600 text-3xl arrow-pulse hidden md:block">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="text-orange-600 text-3xl arrow-pulse md:hidden rotate-90">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <!-- Generation 2 -->
+                <div class="gen-card text-center p-6 bg-zinc-900/50 rounded-2xl border border-zinc-800 hover:border-orange-600 scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="gen-icon text-5xl mb-4">👨‍🍳👩‍🍳</div>
+                    <p class="font-black text-white uppercase tracking-wider mb-1">Mentors</p>
+                    <p class="text-zinc-500 text-sm italic">Parents & Titas</p>
+                    <p class="text-orange-600 text-xs mt-2 font-bold">The Teachers</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="text-orange-600 text-3xl arrow-pulse hidden md:block" style="animation-delay: 0.5s;">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="text-orange-600 text-3xl arrow-pulse md:hidden rotate-90" style="animation-delay: 0.5s;">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <!-- Generation 3 -->
+                <div class="gen-card text-center p-6 bg-orange-600/20 rounded-2xl border-2 border-orange-600 scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="gen-icon text-5xl mb-4 animate-pulse">🔥</div>
+                    <p class="font-black text-orange-500 uppercase tracking-wider mb-1">Hot 'N Sizzle</p>
+                    <p class="text-zinc-400 text-sm italic">The Cousins</p>
+                    <p class="text-orange-600 text-xs mt-2 font-bold">The Dream</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Call to Action -->
+    <section class="py-24 px-8 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 via-transparent to-red-600/10"></div>
+        <div class="max-w-3xl mx-auto relative z-10 scroll-reveal">
+            <h3 class="text-3xl md:text-5xl font-black italic text-white mb-6">
+                Join the <span class="text-orange-500">Family</span>
+            </h3>
+            <p class="text-zinc-400 text-lg mb-8">
+                Experience the taste of tradition. Every plate tells a story of three generations.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tailwind_order.html" class="px-10 py-4 bg-orange-600 text-white font-black uppercase tracking-wider rounded-full btn-glow">
+                    Reserve a Table
+                </a>
+                <a href="tailwind_feedback.html" class="px-10 py-4 border-2 border-orange-600 text-orange-500 font-black uppercase tracking-wider rounded-full hover:bg-orange-600 hover:text-white transition-all duration-300">
+                    Share Your Story
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-black py-12 px-8 border-t border-zinc-800 text-center">
+        <div class="flex justify-center space-x-6 mb-6">
+            <a href="https://web.facebook.com/profile.php?id=61559711830119" target="_blank" class="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:bg-orange-600 hover:text-white transition-all duration-300">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hotnsizzle.pasacao@gmail.com" target="_blank" class="w-10 h-10 bg-zinc-900 rounded-full flex items-center justify-center text-zinc-400 hover:bg-orange-600 hover:text-white transition-all duration-300">
+            <i class="fas fa-envelope"></i>
+            </a>
+        </div>
+        <p class="text-zinc-500 text-sm font-bold uppercase tracking-[0.2em]">© 2026 HOT 'N SIZZLE GRILL & RESTAURANT. EST 2024.</p>
+    </footer>
+
+    <script>
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-section');
+            if (hero) {
+                hero.style.backgroundPositionY = `${scrolled * 0.5}px`;
+            }
+        });
+    </script>
+</body>
+</html>
