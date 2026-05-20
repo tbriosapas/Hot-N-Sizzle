@@ -8,7 +8,7 @@ function createNavbar() {
             <div class="flex-1">
                 <ul class="hidden lg:flex items-center space-x-6 font-bold uppercase tracking-widest text-[11px] text-white">
                     <li class="relative group">
-                        <a href="tailwind.html" class="hover:text-orange-500 transition-colors duration-300 py-2 block relative">
+                        <a href="index.html" class="hover:text-orange-500 transition-colors duration-300 py-2 block relative">
                             Home
                             <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-500 transition-all duration-300 group-hover:w-full"></span>
                         </a>
@@ -32,7 +32,7 @@ function createNavbar() {
 
             <!-- Logo Center -->
             <div class="flex-shrink-0 relative z-50 -mb-8 px-4">
-                <a href="tailwind.html" class="block rounded-b-2xl group">
+                <a href="index.html" class="block rounded-b-2xl group">
                     <img src="logo copy.png" alt="Hot 'N Sizzle Logo" class="h-24 w-auto object-contain transition-transform duration-500 group-hover:scale-110 group-hover:drop-shadow-[0_0_15px_rgba(234,88,12,0.5)]">
                 </a>
             </div>
@@ -70,7 +70,7 @@ function createNavbar() {
         <!-- Mobile Menu -->
         <div id="mobileMenu" class="hidden lg:hidden mt-4 pb-4 border-t border-zinc-800 pt-4">
             <div class="flex flex-col space-y-3">
-                <a href="tailwind.html" class="text-white hover:text-orange-500 font-bold uppercase text-sm tracking-wider transition-colors">Home</a>
+                <a href="index.html" class="text-white hover:text-orange-500 font-bold uppercase text-sm tracking-wider transition-colors">Home</a>
                 <a href="tailwind_menu.html" class="text-white hover:text-orange-500 font-bold uppercase text-sm tracking-wider transition-colors">Menu</a>
                 <a href="tailwind_aboutus.html" class="text-white hover:text-orange-500 font-bold uppercase text-sm tracking-wider transition-colors">About Us</a>
                 <a href="tailwind_contact.html" class="text-white hover:text-orange-500 font-bold uppercase text-sm tracking-wider transition-colors">Contact</a>
