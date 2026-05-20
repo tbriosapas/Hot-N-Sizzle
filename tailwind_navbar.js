@@ -17,7 +17,7 @@ function createNavbar() {
 
             <!-- DESKTOP: Left links (your original) -->
             <div class="hidden lg:flex flex-1 items-center space-x-6 font-bold uppercase tracking-widest text-[11px] text-white">
-                <li class="list-none"><a href="tailwind.html" class="hover:text-orange-500 transition">Home</a></li>
+                <li class="list-none"><a href="index.html" class="hover:text-orange-500 transition">Home</a></li>
                 <li class="list-none text-zinc-700">|</li>
                 <li class="list-none"><a href="tailwind_menu.html" class="hover:text-orange-500 transition">Menu</a></li>
                 <li class="list-none text-zinc-700">|</li>
@@ -26,7 +26,7 @@ function createNavbar() {
 
             <!-- LOGO: Center (your original) -->
             <div class="flex-shrink-0 relative z-50 lg:-mb-8 px-4">
-                <a href="tailwind.html" class="block rounded-b-2xl">
+                <a href="index.html" class="block rounded-b-2xl">
                     <img src="logo copy.png" alt="Hot 'N Sizzle Logo" class="h-16 lg:h-24 w-auto object-contain hover:scale-105 transition-transform duration-300">
                 </a>
             </div>
@@ -60,7 +60,7 @@ function createNavbar() {
                     <p class="text-zinc-600 text-[10px] font-bold uppercase tracking-[0.3em]">Menu</p>
                 </div>
 
-                <a href="tailwind.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
+                <a href="index.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
                     <span class="w-9 h-9 bg-zinc-900 rounded-lg flex items-center justify-center"><i class="fas fa-home text-sm text-zinc-500"></i></span>
                     <span class="font-bold uppercase tracking-wider text-sm">Home</span>
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
