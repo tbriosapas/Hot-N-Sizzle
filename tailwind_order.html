@@ -61,62 +61,183 @@
 
     <div class="flex flex-col lg:flex-row min-h-screen pt-0">
         
-        <main class="w-full lg:w-2/3 p-6 md:p-12 overflow-y-auto">
-            <header class="mb-6 animate-slide-in">
-                <h1 class="text-4xl font-black italic text-orange-500 uppercase tracking-tighter mb-2">Hot 'N Sizzle Menu</h1>
-                <p class="text-zinc-400">Select your items and choose service type on the right.</p>
-            </header>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Bulalo Special', 350)">
-                    <img src="bulalo.jpg" class="w-24 h-24 rounded-lg object-cover bg-zinc-800 group-hover:scale-105 transition-transform" alt="Bulalo">
-                    <div class="flex-1">
-                        <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Bulalo Special</h3>
-                        <p class="text-zinc-500 text-xs mb-1">Good for 3-4 persons</p>
-                        <p class="text-orange-500 font-black text-xl">₱350</p>
-                    </div>
-                    <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-
-                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Liempo Steak', 105)">
-                    <img src="liempo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800 group-hover:scale-105 transition-transform" alt="Liempo">
-                    <div class="flex-1">
-                        <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Liempo Steak</h3>
-                        <p class="text-zinc-500 text-xs mb-1">With rice and gravy</p>
-                        <p class="text-orange-500 font-black text-xl">₱105</p>
-                    </div>
-                    <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-
-                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Chicken Steak', 95)">
-                    <img src="chicken steak.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800 group-hover:scale-105 transition-transform" alt="Chicken">
-                    <div class="flex-1">
-                        <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Chicken Steak</h3>
-                        <p class="text-zinc-500 text-xs mb-1">Quarter chicken</p>
-                        <p class="text-orange-500 font-black text-xl">₱95</p>
-                    </div>
-                    <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-
-                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sisig Solo', 75)">
-                    <img src="sisig solo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800 group-hover:scale-105 transition-transform" alt="Sisig">
-                    <div class="flex-1">
-                        <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sisig Solo</h3>
-                        <p class="text-zinc-500 text-xs mb-1">With egg on hot plate</p>
-                        <p class="text-orange-500 font-black text-xl">₱75</p>
-                    </div>
-                    <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
+ <main class="w-full lg:w-2/3 p-6 md:p-12 overflow-y-auto">
+    <header class="mb-10 animate-slide-in">
+        <h1 class="text-4xl font-black italic text-orange-500 uppercase tracking-tighter mb-2">Hot 'N Sizzle Menu</h1>
+        <p class="text-zinc-400">Select your items and choose service type on the right.</p>
+    </header>
+<!-- sizzling plates -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Sizzling Plates</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sizzling Bangus', 190)">
+            <img src="Sizzling bangus.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sizzling bangus">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sizzling Bangus</h3>
+                <p class="text-orange-500 font-black text-xl">₱190</p>
             </div>
-        </main>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- sizzling tuna -->
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sizzling Tuna', 200)">
+            <img src="Sizzling Tuna.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sizzling tuna">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sizzling Tuna</h3>
+                <p class="text-orange-500 font-black text-xl">₱200</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- family bowls -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Family Bowls</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Bulalo Special', 350)">
+            <img src="bulalo.jpg" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Bulalo">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Bulalo Special</h3>
+                <p class="text-orange-500 font-black text-xl">₱350</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- kare-kare -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Kare-Kare', 380)">
+            <img src="kare-kare.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="kare-kare">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Kare-Kare</h3>
+                <p class="text-orange-500 font-black text-xl">₱380</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- sinigang na baboy -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sinigang na Baboy', 320)">
+            <img src="sinigang na baboy.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sinigang na baboy">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sinigang na baboy</h3>
+                <p class="text-orange-500 font-black text-xl">₱320</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- crispy pata -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Crispy Pata', 450)">
+            <img src="crispy pata.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="crispy pata">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Crispy Pata</h3>
+                <p class="text-orange-500 font-black text-xl">₱450</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- solo meals -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Solo Meals</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- sisig solo -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sisig solo', 75)">
+            <img src="sisig solo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sisig solo">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sisig solo</h3>
+                <p class="text-orange-500 font-black text-xl">₱75</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- tapsilog -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Tapsilog', 120)">
+            <img src="tapsilog.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Tapsilog">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Tapsilog</h3>
+                <p class="text-orange-500 font-black text-xl">₱120</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- longsilog -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Longsilog', 95)">
+            <img src="longsilog.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Longsilog">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Longsilog</h3>
+                <p class="text-orange-500 font-black text-xl">₱95</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- liempo steak -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Liempo Steak', 105)">
+            <img src="liempo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Liempo Steak">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Liempo Steak</h3>
+                <p class="text-orange-500 font-black text-xl">₱105</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- chicken steak -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Chicken Steak', 95)">
+            <img src="chicken steak.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="chicken Steak">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Chicken Steak</h3>
+                <p class="text-orange-500 font-black text-xl">₱95</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- pork bbq -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Pork Barbecue', 85)">
+            <img src="Pork BBQ.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="pork bbq">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Pork Barbecue</h3>
+                <p class="text-orange-500 font-black text-xl">₱85</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Drinks</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- mango shake -->
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Mango Shake', 85)">
+            <img src="mango shake.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Mango Shake">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Mango Shake</h3>
+                <p class="text-orange-500 font-black text-xl">₱85</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- iced tea -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Iced Tea', 45)">
+            <img src="Iced tea.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Ice Tea">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Iced Tea</h3>
+                <p class="text-orange-500 font-black text-xl">₱45</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- extras -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Extras</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- rice -->
+ <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Rice', 20)">
+            <img src="rice.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="rice">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Extra Rice</h3>
+                <p class="text-orange-500 font-black text-xl">₱20</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- garlic rice -->
+ <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Garlic Rice', 25)">
+            <img src="garlic rice.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="garlic rice">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">garlic Rice</h3>
+                <p class="text-orange-500 font-black text-xl">₱25</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- gravy -->
+          <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Gravy', 15)">
+            <img src="gravy.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="gravy">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Extra Gravy</h3>
+                <p class="text-orange-500 font-black text-xl">₱15</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+</main>
 
         <aside class="w-full lg:w-1/3 bg-black border-l border-zinc-800 p-8 flex flex-col gap-8 sticky top-0 h-screen overflow-y-auto">
             
@@ -351,13 +472,21 @@ const orderData = {
     status: 'pending'
 };
 
+// Replace this block inside your submitOrder function:
 if(currentService === 'dine-in') {
-    // Check your database columns for reservation date and time. 
-    // If they are named 'res_date' and 're_time', keep these. 
-    // If they are named 'reservation_date' or 'res_time', update the left side!
+    // Only try to grab these if they exist in the currently active form
+    const dateInput = form.querySelector('input[type="date"]');
+    const timeInput = form.querySelector('input[type="time"]');
+    const guestsInput = form.querySelector('input[type="number"]');
+
     orderData.res_date = dateInput ? dateInput.value : null; 
     orderData.re_time = timeInput ? timeInput.value : null;  
     orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
+} else {
+    // For take-out, explicitly set these to null if they aren't provided
+    orderData.res_date = null;
+    orderData.re_time = null;
+    orderData.guests = null;
 }
 
         console.log("Sending to orders table:", orderData);
