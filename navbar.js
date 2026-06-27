@@ -24,11 +24,16 @@ function createNavbar() {
                 <li class="list-none"><a href="aboutus.html" class="hover:text-orange-500 transition">About Us</a></li>
             </div>
 
-            <!-- LOGO: Center (your original) -->
+            <!-- LOGO: Center (Secret Gateway to Evaluation Login Panel) -->
             <div class="flex-shrink-0 relative z-50 lg:-mb-8 px-4">
-                <a href="index.html" class="block rounded-b-2xl">
-                    <img src="logo copy.png" alt="Hot 'N Sizzle Logo" class="h-16 lg:h-24 w-auto object-contain hover:scale-105 transition-transform duration-300">
-                </a>
+            <!-- PUT YOUR PATH DIRECTLY INSIDE THE href="..." BELOW -->
+            <a href="evaluation.html" class="block rounded-b-2xl relative group cursor-default sm:cursor-pointer select-none" title="Operational Portal">
+            <!-- Logo image scales up and brightens slightly on hover -->
+            <img src="logo copy.png" alt="Hot 'N Sizzle Logo" class="h-16 lg:h-24 w-auto object-contain transition-all duration-300 group-hover:scale-105 group-hover:brightness-110 group-active:scale-95">
+        
+            <!-- Secret indicator: A microscopic amber status dot that glows only when hovered -->
+            <span class="absolute bottom-1 lg:-bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_6px_#ea580c]"></span>
+            </a>
             </div>
 
             <!-- DESKTOP: Right links (your original) -->
