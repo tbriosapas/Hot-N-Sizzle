@@ -36,10 +36,8 @@
         }
     </style>
 </head>
-<body class="bg-[#0b0b0c] text-zinc-100 min-h-screen lg:h-screen flex flex-col lg:overflow-hidden antialiased">
+<body class="bg-[#0b0b0c] text-zinc-100 h-screen flex flex-col overflow-hidden antialiased">
 
-    <!-- Top Navigation Header -->
-<!-- Top Navigation Header: Fixed for mobile spacing -->
     <nav class="flex-shrink-0 bg-[#0b0b0c]/90 backdrop-blur-md border-b border-orange-600/10 px-4 sm:px-6 py-4">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row gap-4 md:items-center justify-between">
             <div class="flex items-center justify-between md:justify-start gap-4">
@@ -51,14 +49,12 @@
                     </div>
                 </div>
                 
-                <!-- Back to Website Link: Repositioned gracefully -->
                 <a href="tailwind.html" class="text-xs font-bold text-zinc-400 hover:text-orange-500 flex items-center gap-1.5 transition-colors border-l border-zinc-800 pl-4 py-1 group select-none">
                     <span class="transform transition-transform group-hover:-translate-x-0.5">←</span> 
                     Back to Website
                 </a>
             </div>
             
-            <!-- System Badges & Actions Status Row -->
             <div class="flex items-center justify-between md:justify-end gap-4 border-t border-zinc-900/60 pt-3 md:pt-0 md:border-none">
                 <div id="nav-badge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900 border border-zinc-800 text-xs text-zinc-400">
                     <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_#ef4444]"></span>
@@ -69,62 +65,8 @@
         </div>
     </nav>
 
-    <!-- Main Container: Fixed container behavior -->
-    <main class="flex-1 flex flex-col min-h-0 w-full max-w-7xl mx-auto px-4 py-6 overflow-y-auto lg:overflow-hidden custom-scroll">
+    <main class="flex-1 flex flex-col min-h-0 w-full max-w-7xl mx-auto px-4 py-4">
         
-        <!-- LOGIN CONTAINER (Kept identical) -->
-        <div id="loginFormContainer" class="max-w-md mx-auto mt-12 w-full hidden">
-            <!-- Your unchanged login contents -->
-        </div>
-
-        <!-- SPLIT DASHBOARD LAYOUT: Height restrictions removed for mobile views -->
-        <div id="dashboard" class="hidden flex-1 flex flex-col min-h-0 space-y-4">
-            <div class="flex-shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
-                <div>
-                    <h2 class="text-xl font-black text-white uppercase tracking-tight">System Operations Feed</h2>
-                    <p class="text-[11px] text-zinc-400">Isolated receipt layout views optimized for lightning-quick ticket execution.</p>
-                </div>
-                <button onclick="refreshAllData()" class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-95 w-full sm:w-auto">
-                    Refresh Streams
-                </button>
-            </div>
-
-            <!-- Responsive Columns: Removed strict height lockouts on mobile grids -->
-            <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-0">
-                
-                <!-- LEFT DOCK: RECEIPTS (Now expands fully on mobile layout) -->
-                <section class="lg:col-span-7 flex flex-col bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden min-h-0">
-                    <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-amber-500 flex items-center gap-2">
-                            <span class="inline-block h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            Active Receipt Manifests
-                        </h3>
-                        <span id="order-count" class="text-[10px] font-mono bg-zinc-900 border border-zinc-800 text-zinc-400 px-2 py-0.5 rounded">0 Tickets</span>
-                    </div>
-                    
-                    <!-- Fixed Height Issue: Changed from flex-1 to allow dynamic content generation without compressing -->
-                    <div id="ordersContainer" class="overflow-y-auto lg:max-h-[calc(100vh-240px)] custom-scroll p-4 space-y-6"></div>
-                </section>
-
-                <!-- RIGHT DOCK: FEEDBACK -->
-                <section class="lg:col-span-5 flex flex-col bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden min-h-0">
-                    <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
-                        <h3 class="text-xs font-bold uppercase tracking-widest text-red-500 flex items-center gap-2">
-                            <span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-                            Customer Guestbook Remarks
-                        </h3>
-                    </div>
-                    
-                    <div id="feedbackContainer" class="overflow-y-auto lg:max-h-[calc(100vh-240px)] custom-scroll p-4 space-y-4 flex flex-col"></div>
-                </section>
-
-            </div>
-        </div>
-    </main>
-    <!-- Main Container -->
-    <main class="flex-1 flex flex-col min-h-0 w-full max-w-7xl mx-auto px-4 py-6">
-        
-        <!-- LOGIN CONTAINER -->
         <div id="loginFormContainer" class="max-w-md mx-auto mt-12 w-full hidden">
             <div class="bg-zinc-900/40 border border-zinc-800 p-8 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <div class="text-center mb-8">
@@ -153,22 +95,30 @@
             </div>
         </div>
 
-        <!-- SPLIT DASHBOARD LAYOUT -->
         <div id="dashboard" class="hidden flex-1 flex flex-col min-h-0 space-y-4">
+            
             <div class="flex-shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
                 <div>
                     <h2 class="text-xl font-black text-white uppercase tracking-tight">System Operations Feed</h2>
-                    <p class="text-[11px] text-zinc-400">Isolated receipt layout views optimized for lightning-quick ticket execution.</p>
+                    <p class="text-[11px] text-zinc-400">Isolated views optimized for lightning-quick ticket execution.</p>
                 </div>
-                <button onclick="refreshAllData()" class="self-start sm:self-auto inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-95">
+                <button onclick="refreshAllData()" class="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-zinc-800 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all active:scale-95 w-full sm:w-auto">
                     Refresh Streams
+                </button>
+            </div>
+
+            <div id="mobileTabContainer" class="flex lg:hidden bg-zinc-950 border border-zinc-900 p-1 rounded-xl flex-shrink-0">
+                <button onclick="switchMobileTab('orders')" id="tabBtn-orders" class="flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white transition-all shadow-md">
+                    Orders
+                </button>
+                <button onclick="switchMobileTab('feedback')" id="tabBtn-feedback" class="flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg text-zinc-500 hover:text-zinc-300 transition-all">
+                    Feedback
                 </button>
             </div>
 
             <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-0 overflow-hidden">
                 
-                <!-- LEFT DOCK: RECEIPTS -->
-                <section class="lg:col-span-7 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden">
+                <section id="section-orders" class="lg:col-span-7 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden block">
                     <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-amber-500 flex items-center gap-2">
                             <span class="inline-block h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
@@ -176,19 +126,16 @@
                         </h3>
                         <span id="order-count" class="text-[10px] font-mono bg-zinc-900 border border-zinc-800 text-zinc-400 px-2 py-0.5 rounded">0 Tickets</span>
                     </div>
-                    
                     <div id="ordersContainer" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-6"></div>
                 </section>
 
-                <!-- RIGHT DOCK: FEEDBACK (CHAT BUBBLE STYLING) -->
-                <section class="lg:col-span-5 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden">
+                <section id="section-feedback" class="lg:col-span-5 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden hidden lg:flex">
                     <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-red-500 flex items-center gap-2">
                             <span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
                             Customer Guestbook Remarks
                         </h3>
                     </div>
-                    
                     <div id="feedbackContainer" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-4 flex flex-col"></div>
                 </section>
 
@@ -209,6 +156,40 @@
                 showDashboard();
             } else {
                 document.getElementById('loginFormContainer').classList.remove('hidden');
+            }
+        });
+
+        // Tab Controller logic to switch tabs seamlessly on mobile layout frames
+        function switchMobileTab(activeTab) {
+            if (window.innerWidth >= 1024) return; // Prevent interference on desktop viewports
+
+            const ordersSec = document.getElementById('section-orders');
+            const feedbackSec = document.getElementById('section-feedback');
+            const ordersBtn = document.getElementById('tabBtn-orders');
+            const feedbackBtn = document.getElementById('tabBtn-feedback');
+
+            if (activeTab === 'orders') {
+                ordersSec.style.display = 'flex';
+                feedbackSec.style.display = 'none';
+                
+                ordersBtn.className = "flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white transition-all shadow-md";
+                feedbackBtn.className = "flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg text-zinc-500 hover:text-zinc-300 transition-all";
+            } else {
+                ordersSec.style.display = 'none';
+                feedbackSec.style.display = 'flex';
+
+                feedbackBtn.className = "flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg bg-gradient-to-r from-red-600 to-orange-600 text-white transition-all shadow-md";
+                ordersBtn.className = "flex-1 py-2.5 text-center text-xs font-bold uppercase tracking-wider rounded-lg text-zinc-500 hover:text-zinc-300 transition-all";
+            }
+        }
+
+        // Automatic recovery engine layout setup when viewport scales back to high-res monitor widths
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 1024) {
+                document.getElementById('section-orders').style.display = 'flex';
+                document.getElementById('section-feedback').style.display = 'flex';
+            } else {
+                switchMobileTab('orders'); // Reset to default tab view when window triggers mobile transition rules
             }
         });
 
@@ -269,7 +250,7 @@
             loadFeedbackOnly();
         }
 
-async function loadOrders() {
+        async function loadOrders() {
             const ordersContainer = document.getElementById('ordersContainer');
             ordersContainer.innerHTML = `<div class="py-8 text-center text-xs text-zinc-500 uppercase tracking-wider">Printing Fresh Manifests...</div>`;
 
@@ -304,15 +285,14 @@ async function loadOrders() {
                     receiptCard.className = "bg-zinc-100 text-zinc-900 p-6 rounded-t-sm shadow-xl flex flex-col justify-between receipt-font relative pb-8 border-t-4 border-orange-500";
 
                     let itemsHTML = '';
-                    let calculatedTotal = 0; // Track dynamic calculation variable
+                    let calculatedTotal = 0;
 
                     if (order.order_items && order.order_items.length > 0) {
                         order.order_items.forEach(item => {
                             const quantity = item.qty || item.quantity || 1;
                             const unitPrice = item.price || item.unit_price || 0;
                             const lineTotal = unitPrice * quantity;
-                            
-                            calculatedTotal += lineTotal; // Add line item to overall receipt total
+                            calculatedTotal += lineTotal;
 
                             itemsHTML += `
                                 <div class="flex justify-between items-start py-0.5 text-xs font-bold uppercase tracking-tight">
@@ -324,9 +304,7 @@ async function loadOrders() {
                         itemsHTML = `<div class="text-center py-2 text-xs italic border-y border-dashed border-zinc-400">** NO ORDER ITEMS FILED **</div>`;
                     }
 
-                    // Fallback configuration if order level column has data, otherwise use calculated total
                     const finalBillAmount = order.total_bill || order.total || calculatedTotal;
-
                     const isCompleted = order.status === 'completed';
                     const statusText = isCompleted ? " [PAID / DONE] " : "** ACTIVE PREP **";
 
@@ -338,16 +316,17 @@ async function loadOrders() {
                                 <p class="text-[10px] font-bold tracking-widest text-red-600 mt-0.5">${statusText}</p>
                             </div>
 
-                <div class="text-[11px] space-y-0.5 mb-2 font-bold uppercase border-b border-dashed border-zinc-400 pb-2">
-                <p>GUEST: <span class="font-normal">${customerName}</span></p>
-    
-            <!-- DYNAMIC CONTACT CHECKER -->
-            <p>CONTACT: <span class="font-normal">${
-         (order.contact || order['contact info'] || order.contact_info || '').toString().trim() || 'NONE'}</span></p>
+                            <div class="text-[11px] space-y-0.5 mb-2 font-bold uppercase border-b border-dashed border-zinc-400 pb-2">
+                                <p>GUEST: <span class="font-normal">${customerName}</span></p>
+                                <p>CONTACT: <span class="font-normal">${(order.contact || order['contact info'] || order.contact_info || '').toString().trim() || 'NONE'}</span></p>
+                                <p>SVC TYPE: <span class="text-orange-700 font-black">${order.service_type || order.type || 'DINE-IN'}</span></p>
+                                <p>GUESTS: <span class="font-normal">${order.guests || order.guest_count || '1'} PAX</span></p>
+                            </div>
 
-    <p>SVC TYPE: <span class="text-orange-700 font-black">${order.service_type || order.type || 'DINE-IN'}</span></p>
-    <p>GUESTS: <span class="font-normal">${order.guests || order.guest_count || '1'} PAX</span></p>
-</div>
+                            <div class="text-[10px] space-y-0.5 mb-3 text-zinc-700 font-bold border-b border-dashed border-zinc-400 pb-2">
+                                <p>ORDERED ON : ${formatDateTime(order.created_at || order.order_date)}</p>
+                                <p>RESERVATION: ${formatDateTime(order.reservation_date || order.reservation_time || order.reservation)}</p>
+                            </div>
 
                             <div class="pt-1 space-y-1">
                                 ${itemsHTML}
