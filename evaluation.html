@@ -214,7 +214,7 @@
             loadFeedbackOnly();
         }
 
-        async function loadOrders() {
+async function loadOrders() {
             const ordersContainer = document.getElementById('ordersContainer');
             ordersContainer.innerHTML = `<div class="py-8 text-center text-xs text-zinc-500 uppercase tracking-wider">Printing Fresh Manifests...</div>`;
 
@@ -249,17 +249,28 @@
                     receiptCard.className = "bg-zinc-100 text-zinc-900 p-6 rounded-t-sm shadow-xl flex flex-col justify-between receipt-font relative pb-8 border-t-4 border-orange-500";
 
                     let itemsHTML = '';
+                    let calculatedTotal = 0; // Track dynamic calculation variable
+
                     if (order.order_items && order.order_items.length > 0) {
                         order.order_items.forEach(item => {
+                            const quantity = item.qty || item.quantity || 1;
+                            const unitPrice = item.price || item.unit_price || 0;
+                            const lineTotal = unitPrice * quantity;
+                            
+                            calculatedTotal += lineTotal; // Add line item to overall receipt total
+
                             itemsHTML += `
                                 <div class="flex justify-between items-start py-0.5 text-xs font-bold uppercase tracking-tight">
-                                    <span>${item.qty || 1}X ${item.item_name || item.name}</span>
-                                    <span>${formatPHPCurrency(item.price * (item.qty || 1))}</span>
+                                    <span>${quantity}X ${item.item_name || item.name}</span>
+                                    <span>${formatPHPCurrency(lineTotal)}</span>
                                 </div>`;
                         });
                     } else {
                         itemsHTML = `<div class="text-center py-2 text-xs italic border-y border-dashed border-zinc-400">** NO ORDER ITEMS FILED **</div>`;
                     }
+
+                    // Fallback configuration if order level column has data, otherwise use calculated total
+                    const finalBillAmount = order.total_bill || order.total || calculatedTotal;
 
                     const isCompleted = order.status === 'completed';
                     const statusText = isCompleted ? " [PAID / DONE] " : "** ACTIVE PREP **";
@@ -290,7 +301,7 @@
 
                             <div class="border-t border-dashed border-zinc-400 mt-3 pt-2 flex justify-between font-black text-xs uppercase tracking-tight">
                                 <span>TOTAL BILL:</span>
-                                <span class="text-sm">${formatPHPCurrency(order.total_bill || order.total || 0)}</span>
+                                <span class="text-sm">${formatPHPCurrency(finalBillAmount)}</span>
                             </div>
                         </div>
 
