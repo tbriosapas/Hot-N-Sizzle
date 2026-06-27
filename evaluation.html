@@ -283,18 +283,22 @@ async function loadOrders() {
                                 <p class="text-[10px] font-bold tracking-widest text-red-600 mt-0.5">${statusText}</p>
                             </div>
 
-                            <div class="text-[11px] space-y-0.5 mb-2 font-bold uppercase border-b border-dashed border-zinc-400 pb-2">
-                                <p>NAME: <span class="font-normal">${customerName}</span></p>
-                                <p>CONTACT: <span class="font-normal">${
-                                    (order.contact || order.contact_info || '').toString().trim() || 'NONE'}</span></p>
-                                <p>SVC TYPE: <span class="text-orange-700 font-black">${order.service_type || order.type || 'DINE-IN'}</span></p>
-                                <p>GUESTS: <span class="font-normal">${order.guests || order.guest_count || '1'} PAX</span></p>
-                            </div>
+<div class="text-[11px] space-y-0.5 mb-2 font-bold uppercase border-b border-dashed border-zinc-400 pb-2">
+    <p>GUEST: <span class="font-normal">${customerName}</span></p>
+    
+    <!-- DYNAMIC CONTACT CHECKER -->
+    <p>CONTACT: <span class="font-normal">${
+        (order.contact || order.contact_info || order.contactInfo || order.phone || '').toString().trim() || 'NONE'
+    }</span></p>
+    
+    <!-- SYSTEM DEBUG ROW: This will show you exactly what columns exist in your row if it says NONE -->
+    <p class="text-[9px] text-zinc-400 font-normal normal-case italic pt-0.5">
+        Fields found: [ ${Object.keys(order).filter(k => k.toLowerCase().includes('cont') || k.toLowerCase().includes('phon') || k.toLowerCase().includes('info')).join(', ') || 'no contact columns found'} ]
+    </p>
 
-                            <div class="text-[10px] space-y-0.5 mb-3 text-zinc-700 font-bold border-b border-dashed border-zinc-400 pb-2">
-                                <p>ORDERED ON : ${formatDateTime(order.created_at || order.order_date)}</p>
-                                <p>RESERVATION: ${formatDateTime(order.reservation_date || order.reservation_time || order.reservation)}</p>
-                            </div>
+    <p>SVC TYPE: <span class="text-orange-700 font-black">${order.service_type || order.type || 'DINE-IN'}</span></p>
+    <p>GUESTS: <span class="font-normal">${order.guests || order.guest_count || '1'} PAX</span></p>
+</div>
 
                             <div class="pt-1 space-y-1">
                                 ${itemsHTML}
