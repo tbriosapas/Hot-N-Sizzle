@@ -428,6 +428,7 @@ async function submitOrder(e) {
 
     const form = e.target;
     const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
     submitBtn.textContent = 'Saving...';
     submitBtn.disabled = true;
 
@@ -435,41 +436,29 @@ async function submitOrder(e) {
         // Safe mapping: Grab inputs directly by their names or types to prevent index shift issues
         const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
         const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
-        const dateInput = form.querySelector('input[type="date"]');
-        const timeInput = form.querySelector('input[type="time"]');
-        const guestsInput = form.querySelector('input[type="number"]');
 
         // Prepare main table object matching your exact Supabase columns
-// Prepare main table object matching your exact Supabase columns
-const orderData = {
-    // If your column is 'customer_name', use this:
-    customer_name: nameInput ? nameInput.value : '',
-    
-    // Check your exact spelling! Is it 'contact info', 'contact_info', or 'contact'?
-    // Replace the text on the left with your exact Supabase column title:
-    'contact info': contactInput ? contactInput.value : '', 
+        const orderData = {
+            customer_name: nameInput ? nameInput.value : '',
+            'contact info': contactInput ? contactInput.value : '', 
+            service_type: currentService,
+            total_amount: total,
+            status: 'pending'
+        };
 
-    service_type: currentService,
-    total_amount: total,
-    status: 'pending'
-};
+        if(currentService === 'dine-in') {
+            const dateInput = form.querySelector('input[type="date"]');
+            const timeInput = form.querySelector('input[type="time"]');
+            const guestsInput = form.querySelector('input[type="number"]');
 
-// Replace this block inside your submitOrder function:
-if(currentService === 'dine-in') {
-    // Only try to grab these if they exist in the currently active form
-    const dateInput = form.querySelector('input[type="date"]');
-    const timeInput = form.querySelector('input[type="time"]');
-    const guestsInput = form.querySelector('input[type="number"]');
-
-    orderData.res_date = dateInput ? dateInput.value : null; 
-    orderData.re_time = timeInput ? timeInput.value : null;  
-    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
-} else {
-    // For take-out, explicitly set these to null if they aren't provided
-    orderData.res_date = null;
-    orderData.re_time = null;
-    orderData.guests = null;
-}
+            orderData.res_date = dateInput ? dateInput.value : null; 
+            orderData.re_time = timeInput ? timeInput.value : null;  
+            orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
+        } else {
+            orderData.res_date = null;
+            orderData.re_time = null;
+            orderData.guests = null;
+        }
 
         console.log("Sending to orders table:", orderData);
 
@@ -482,12 +471,17 @@ if(currentService === 'dine-in') {
             throw new Error("Supabase inserted the row but didn't return data. Check your 'Prefer' header.");
         }
         
-        // Grab the newly generated primary key ID
+        // Grab the newly generated primary key ID securely
         const newOrderId = createdOrderArray[0].id; 
+        if (!newOrderId) {
+            throw new Error("Could not read 'id' from the returned order row. Check your primary key column name.");
+        }
 
         // Execute Step 2: Map and Insert Items
+        // CRITICAL CHECK: If your foreign key column in 'order_items' is named 'order_id', keep it. 
+        // If your schema forced the foreign key onto 'id', change the key below to 'id'.
         const orderItemsData = order.map(item => ({
-            order_id: newOrderId, // Foreign Key connection
+            order_id: newOrderId, 
             item_name: item.name,
             qty: item.qty,
             price: item.price
@@ -508,12 +502,11 @@ if(currentService === 'dine-in') {
 
     } catch(err) {
         console.error('Detailed Order Process Failure:', err);
-        showToast('Error saving order. Please look at browser console logs.');
-        submitBtn.textContent = currentService === 'dine-in' ? 'Confirm Dine-In' : 'Place Pickup Order';
+        showToast('Error saving order. Check console logs.');
+        submitBtn.textContent = originalText;
         submitBtn.disabled = false;
     }
 }
-
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
