@@ -299,7 +299,7 @@
         <span id="toastMessage">Added to order!</span>
     </div>
 
-    <script>
+   <script>
         // =============================================
         // SUPABASE CONFIG — replace with your own keys
         // =============================================
@@ -395,118 +395,109 @@
             }
         }
 
-// 1. UPDATE YOUR SUPABASE POST FUNCTION TO FORCIBLY RETURN THE INSERTED DATA
-async function supabasePost(table, data) {
-    const url = `${SUPABASE_URL}/rest/v1/${table}`;
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'apikey': SUPABASE_KEY,
-            'Authorization': `Bearer ${SUPABASE_KEY}`,
-            'Content-Type': 'application/json',
-            // CRITICAL: This tells Supabase to send back the row (including the new ID)
-            'Prefer': 'return=representation' 
-        },
-        body: JSON.stringify(data)
-    });
+        // 1. UPDATE YOUR SUPABASE POST FUNCTION TO FORCIBLY RETURN THE INSERTED DATA
+        async function supabasePost(table, data) {
+            const url = `${SUPABASE_URL}/rest/v1/${table}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation' 
+                },
+                body: JSON.stringify(data)
+            });
 
-    if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`Supabase Error [${table}]: ${errText}`);
-    }
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Supabase Error [${table}]: ${errText}`);
+            }
 
-    return await response.json(); // This will now successfully return an array containing the row
-}
-
-// 2. UPDATE THE SUBMIT FUNCTION WITH ROBUST INPUT SELECTION
-async function submitOrder(e) {
-    e.preventDefault();
-    if(order.length === 0) {
-        showToast('Please add items first!');
-        return;
-    }
-
-    const form = e.target;
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Saving...';
-    submitBtn.disabled = true;
-
-    try {
-        // Safe mapping: Grab inputs directly by their names or types to prevent index shift issues
-        const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
-        const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
-
-        // Prepare main table object matching your exact Supabase columns
-        const orderData = {
-            customer_name: nameInput ? nameInput.value : '',
-            'contact info': contactInput ? contactInput.value : '', 
-            service_type: currentService,
-            total_amount: total,
-            status: 'pending'
-        };
-
-        if(currentService === 'dine-in') {
-            const dateInput = form.querySelector('input[type="date"]');
-            const timeInput = form.querySelector('input[type="time"]');
-            const guestsInput = form.querySelector('input[type="number"]');
-
-            orderData.res_date = dateInput ? dateInput.value : null; 
-            orderData.re_time = timeInput ? timeInput.value : null;  
-            orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
-        } else {
-            orderData.res_date = null;
-            orderData.re_time = null;
-            orderData.guests = null;
+            return await response.json();
         }
 
-        console.log("Sending to orders table:", orderData);
+        // 2. FIXED SUBMIT FUNCTION MATCHING YOUR SCHEMA CONSTRAINT
+        async function submitOrder(e) {
+            e.preventDefault();
+            if(order.length === 0) {
+                showToast('Please add items first!');
+                return;
+            }
 
-        // Execute Step 1: Insert Order
-        const createdOrderArray = await supabasePost('orders', orderData);
-        
-        console.log("Supabase responded with:", createdOrderArray);
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
 
-        if (!createdOrderArray || createdOrderArray.length === 0) {
-            throw new Error("Supabase inserted the row but didn't return data. Check your 'Prefer' header.");
+            try {
+                const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
+                const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
+
+                const orderData = {
+                    customer_name: nameInput ? nameInput.value : '',
+                    'contact info': contactInput ? contactInput.value : '', 
+                    service_type: currentService,
+                    total_amount: total,
+                    status: 'pending'
+                };
+
+                if(currentService === 'dine-in') {
+                    const dateInput = form.querySelector('input[type="date"]');
+                    const timeInput = form.querySelector('input[type="time"]');
+                    const guestsInput = form.querySelector('input[type="number"]');
+
+                    orderData.res_date = dateInput ? dateInput.value : null; 
+                    orderData.re_time = timeInput ? timeInput.value : null;  
+                    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
+                } else {
+                    orderData.res_date = null;
+                    orderData.re_time = null;
+                    orderData.guests = null;
+                }
+
+                console.log("Sending to orders table:", orderData);
+                const createdOrderArray = await supabasePost('orders', orderData);
+                console.log("Supabase responded with:", createdOrderArray);
+
+                if (!createdOrderArray || createdOrderArray.length === 0) {
+                    throw new Error("Supabase inserted the row but didn't return data.");
+                }
+                
+                const newOrderId = createdOrderArray[0].id; 
+                if (!newOrderId) {
+                    throw new Error("Could not read 'id' from the returned order row.");
+                }
+
+                // FIXED KEY: Changed 'order_id' to 'id' to satisfy constraint 'order_items_id_fkey'
+                const orderItemsData = order.map(item => ({
+                    id: newOrderId, 
+                    item_name: item.name,
+                    qty: item.qty,
+                    price: item.price
+                }));
+
+                console.log("Sending to order_items table:", orderItemsData);
+                await supabasePost('order_items', orderItemsData);
+
+                showToast(`Order confirmed! Total: ₱${total}`);
+                setTimeout(() => {
+                    order = [];
+                    updateOrderUI();
+                    form.reset();
+                    submitBtn.textContent = currentService === 'dine-in' ? 'Confirm Dine-In' : 'Place Pickup Order';
+                    submitBtn.disabled = false;
+                }, 2000);
+
+            } catch(err) {
+                console.error('Detailed Order Process Failure:', err);
+                showToast('Error saving order. Check console logs.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
         }
-        
-        // Grab the newly generated primary key ID securely
-        const newOrderId = createdOrderArray[0].id; 
-        if (!newOrderId) {
-            throw new Error("Could not read 'id' from the returned order row. Check your primary key column name.");
-        }
 
-        // Execute Step 2: Map and Insert Items
-        // CRITICAL CHECK: If your foreign key column in 'order_items' is named 'order_id', keep it. 
-        // If your schema forced the foreign key onto 'id', change the key below to 'id'.
-        const orderItemsData = order.map(item => ({
-            order_id: newOrderId, 
-            item_name: item.name,
-            qty: item.qty,
-            price: item.price
-        }));
-
-        console.log("Sending to order_items table:", orderItemsData);
-        await supabasePost('order_items', orderItemsData);
-
-        // Success Flow
-        showToast(`Order confirmed! Total: ₱${total}`);
-        setTimeout(() => {
-            order = [];
-            updateOrderUI();
-            form.reset();
-            submitBtn.textContent = currentService === 'dine-in' ? 'Confirm Dine-In' : 'Place Pickup Order';
-            submitBtn.disabled = false;
-        }, 2000);
-
-    } catch(err) {
-        console.error('Detailed Order Process Failure:', err);
-        showToast('Error saving order. Check console logs.');
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-    }
-}
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
@@ -516,7 +507,6 @@ async function submitOrder(e) {
             }, 2500);
         }
 
-        // Set min date to today
         document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
     </script>
 </body>
