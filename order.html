@@ -432,30 +432,38 @@
             submitBtn.disabled = true;
 
             try {
-                const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
-                const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
+               // 1. Grab inputs from the currently active form
+const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
+const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
 
-                const orderData = {
-                    customer_name: nameInput ? nameInput.value : '',
-                    'contact info': contactInput ? contactInput.value : '', 
-                    service_type: currentService,
-                    total_amount: total,
-                    status: 'pending'
-                };
+const orderData = {
+    customer_name: nameInput ? nameInput.value : '',
+    service_type: currentService,
+    total_amount: total,
+    status: 'pending'
+};
 
-                if(currentService === 'dine-in') {
-                    const dateInput = form.querySelector('input[type="date"]');
-                    const timeInput = form.querySelector('input[type="time"]');
-                    const guestsInput = form.querySelector('input[type="number"]');
+if (currentService === 'dine-in') {
+    const dateInput = form.querySelector('input[type="date"]');
+    const timeInput = form.querySelector('input[type="time"]');
+    const guestsInput = form.querySelector('input[type="number"]');
 
-                    orderData.reservation_date = dateInput ? dateInput.value : null; 
-                    orderData.reservation_time = timeInput ? timeInput.value : null;  
-                    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
-                } else {
-                    orderData.reservation_date = null;
-                    orderData.reservation_time = null;
-                    orderData.guests = null;
-                }
+    orderData.reservation_date = dateInput ? dateInput.value : null; 
+    orderData.reservation_time = timeInput ? timeInput.value : null;  
+    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
+
+    // For Dine-In: Save to 'contact info' and leave 'contact' empty
+    orderData['contact info'] = contactInput ? contactInput.value : null;
+    orderData.contact = null; 
+} else {
+    // For Take-Out: Save to 'contact' and leave Dine-In fields empty
+    orderData.reservation_date = null;
+    orderData.reservation_time = null;
+    orderData.guests = null;
+    orderData['contact info'] = null;
+
+    orderData.contact = contactInput ? contactInput.value : null; 
+}
 
                 console.log("Sending to orders table:", orderData);
                 const createdOrderArray = await supabasePost('orders', orderData);
@@ -471,12 +479,13 @@
                 }
 
                 // FIXED KEY: Changed 'order_id' to 'id' to satisfy constraint 'order_items_id_fkey'
-                const orderItemsData = order.map(item => ({
-                    id: newOrderId, 
-                    item_name: item.name,
-                    qty: item.qty,
-                    price: item.price
-                }));
+// Leave 'id' out so Supabase autogenerates it. Use your foreign key column (usually order_id) instead!
+const orderItemsData = order.map(item => ({
+    order_id: newOrderId, // Change this to match your exact foreign key column name in order_items
+    item_name: item.name,
+    qty: item.qty,
+    price: item.price
+}));
 
                 console.log("Sending to order_items table:", orderItemsData);
                 await supabasePost('order_items', orderItemsData);
