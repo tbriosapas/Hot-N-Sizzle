@@ -285,7 +285,8 @@ async function loadOrders() {
 
                             <div class="text-[11px] space-y-0.5 mb-2 font-bold uppercase border-b border-dashed border-zinc-400 pb-2">
                                 <p>NAME: <span class="font-normal">${customerName}</span></p>
-                                <p>CONTACT: <span class="font-normal">${(order.contact && order.contact.toString().trim()) ? order.contact : 'NONE'}</span></p>
+                                <p>CONTACT: <span class="font-normal">${
+                                    (order.contact || order.contact_info || '').toString().trim() || 'NONE'}</span></p>
                                 <p>SVC TYPE: <span class="text-orange-700 font-black">${order.service_type || order.type || 'DINE-IN'}</span></p>
                                 <p>GUESTS: <span class="font-normal">${order.guests || order.guest_count || '1'} PAX</span></p>
                             </div>
