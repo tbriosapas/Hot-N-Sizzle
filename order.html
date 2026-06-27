@@ -448,12 +448,12 @@
                     const timeInput = form.querySelector('input[type="time"]');
                     const guestsInput = form.querySelector('input[type="number"]');
 
-                    orderData.res_date = dateInput ? dateInput.value : null; 
-                    orderData.re_time = timeInput ? timeInput.value : null;  
+                    orderData.reservation_date = dateInput ? dateInput.value : null; 
+                    orderData.reservation_time = timeInput ? timeInput.value : null;  
                     orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
                 } else {
-                    orderData.res_date = null;
-                    orderData.re_time = null;
+                    orderData.reservation_date = null;
+                    orderData.reservation_time = null;
                     orderData.guests = null;
                 }
 
