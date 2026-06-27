@@ -1,4 +1,4 @@
-// tailwind_navbar.js - Desktop unchanged, mobile enhanced
+// navbar.js - Desktop unchanged, mobile enhanced
 function createNavbar() {
     const navHTML = `
     <nav class="bg-black border-b border-orange-600 sticky top-0 z-50 px-6 py-2">
@@ -36,7 +36,7 @@ function createNavbar() {
                 <li class="list-none"><a href="contact.html" class="hover:text-orange-500 transition">Contact</a></li>
                 <li class="list-none text-zinc-700">|</li>
                 <li class="list-none"><a href="feedback.html" class="hover:text-orange-500 transition">Feedback</a></li>
-                <a href="tailwind_order.html" class="bg-orange-600 px-6 py-2.5 rounded-full font-black text-xs uppercase text-white hover:bg-white hover:text-orange-600 transition-all duration-300 shadow-lg shadow-orange-900/40 whitespace-nowrap">
+                <a href="order.html" class="bg-orange-600 px-6 py-2.5 rounded-full font-black text-xs uppercase text-white hover:bg-white hover:text-orange-600 transition-all duration-300 shadow-lg shadow-orange-900/40 whitespace-nowrap">
                     Reserve Now
                 </a>
             </div>
@@ -72,7 +72,7 @@ function createNavbar() {
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
                 </a>
 
-                <a href="tailwind_aboutus.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
+                <a href="aboutus.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
                     <span class="w-9 h-9 bg-zinc-900 rounded-lg flex items-center justify-center"><i class="fas fa-users text-sm text-zinc-500"></i></span>
                     <span class="font-bold uppercase tracking-wider text-sm">About Us</span>
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
