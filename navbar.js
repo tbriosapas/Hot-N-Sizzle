@@ -19,9 +19,9 @@ function createNavbar() {
             <div class="hidden lg:flex flex-1 items-center space-x-6 font-bold uppercase tracking-widest text-[11px] text-white">
                 <li class="list-none"><a href="index.html" class="hover:text-orange-500 transition">Home</a></li>
                 <li class="list-none text-zinc-700">|</li>
-                <li class="list-none"><a href="tailwind_menu.html" class="hover:text-orange-500 transition">Menu</a></li>
+                <li class="list-none"><a href="menu.html" class="hover:text-orange-500 transition">Menu</a></li>
                 <li class="list-none text-zinc-700">|</li>
-                <li class="list-none"><a href="tailwind_aboutus.html" class="hover:text-orange-500 transition">About Us</a></li>
+                <li class="list-none"><a href="aboutus.html" class="hover:text-orange-500 transition">About Us</a></li>
             </div>
 
             <!-- LOGO: Center (your original) -->
@@ -33,9 +33,9 @@ function createNavbar() {
 
             <!-- DESKTOP: Right links (your original) -->
             <div class="hidden lg:flex flex-1 items-center justify-end space-x-6 font-bold uppercase tracking-widest text-[11px] text-white">
-                <li class="list-none"><a href="tailwind_contact.html" class="hover:text-orange-500 transition">Contact</a></li>
+                <li class="list-none"><a href="contact.html" class="hover:text-orange-500 transition">Contact</a></li>
                 <li class="list-none text-zinc-700">|</li>
-                <li class="list-none"><a href="tailwind_feedback.html" class="hover:text-orange-500 transition">Feedback</a></li>
+                <li class="list-none"><a href="feedback.html" class="hover:text-orange-500 transition">Feedback</a></li>
                 <a href="tailwind_order.html" class="bg-orange-600 px-6 py-2.5 rounded-full font-black text-xs uppercase text-white hover:bg-white hover:text-orange-600 transition-all duration-300 shadow-lg shadow-orange-900/40 whitespace-nowrap">
                     Reserve Now
                 </a>
@@ -43,7 +43,7 @@ function createNavbar() {
 
             <!-- MOBILE: Order button (right) -->
             <div class="lg:hidden flex-1 flex justify-end">
-                <a href="tailwind_order.html" class="bg-orange-600 px-4 py-2 rounded-full font-black text-[10px] uppercase text-white hover:bg-orange-500 transition-colors shadow-lg">
+                <a href="order.html" class="bg-orange-600 px-4 py-2 rounded-full font-black text-[10px] uppercase text-white hover:bg-orange-500 transition-colors shadow-lg">
                     Order
                 </a>
             </div>
@@ -66,7 +66,7 @@ function createNavbar() {
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
                 </a>
 
-                <a href="tailwind_menu.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
+                <a href="menu.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
                     <span class="w-9 h-9 bg-zinc-900 rounded-lg flex items-center justify-center"><i class="fas fa-utensils text-sm text-zinc-500"></i></span>
                     <span class="font-bold uppercase tracking-wider text-sm">Menu</span>
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
@@ -78,20 +78,20 @@ function createNavbar() {
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
                 </a>
 
-                <a href="tailwind_contact.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
+                <a href="contact.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
                     <span class="w-9 h-9 bg-zinc-900 rounded-lg flex items-center justify-center"><i class="fas fa-map-marker-alt text-sm text-zinc-500"></i></span>
                     <span class="font-bold uppercase tracking-wider text-sm">Contact</span>
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
                 </a>
 
-                <a href="tailwind_feedback.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
+                <a href="feedback.html" class="mobile-link flex items-center gap-4 px-4 py-3.5 text-white hover:text-orange-500 hover:bg-orange-600/10 rounded-xl transition-all duration-200">
                     <span class="w-9 h-9 bg-zinc-900 rounded-lg flex items-center justify-center"><i class="fas fa-comment-dots text-sm text-zinc-500"></i></span>
                     <span class="font-bold uppercase tracking-wider text-sm">Feedback</span>
                     <i class="fas fa-chevron-right ml-auto text-zinc-700 text-xs"></i>
                 </a>
 
                 <div class="mt-5 pt-4 border-t border-zinc-800">
-                    <a href="tailwind_order.html" class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black uppercase tracking-wider rounded-xl shadow-lg shadow-orange-600/30 active:scale-95 transition-transform">
+                    <a href="order.html" class="flex items-center justify-center gap-2 w-full px-6 py-4 bg-gradient-to-r from-orange-600 to-orange-500 text-white font-black uppercase tracking-wider rounded-xl shadow-lg shadow-orange-600/30 active:scale-95 transition-transform">
                         <i class="fas fa-calendar-check"></i>
                         Reserve / Order Now
                     </a>
