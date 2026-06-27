@@ -38,13 +38,22 @@
 </head>
 <body class="bg-[#0b0b0c] text-zinc-100 h-screen flex flex-col overflow-hidden antialiased">
 
+    <!-- Top Navigation Header -->
     <nav class="flex-shrink-0 bg-[#0b0b0c]/90 backdrop-blur-md border-b border-orange-600/10 px-6 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-4">
                 <div class="h-8 w-2 bg-gradient-to-b from-red-600 to-amber-500 rounded-full shadow-[0_0_15px_#dc2626]"></div>
-                <div>
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-500 block leading-none mb-1">Kitchen Intelligence</span>
-                    <h1 class="text-xl font-black tracking-tight text-white uppercase">Hot 'N Sizzle</h1>
+                <div class="flex items-baseline gap-4">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-amber-500 block leading-none mb-1">Kitchen Intelligence</span>
+                        <h1 class="text-xl font-black tracking-tight text-white uppercase inline">Hot 'N Sizzle</h1>
+                    </div>
+                    
+                    <!-- NEW BACK TO WEBSITE BUTTON LINKS -->
+                    <a href="index.html" class="text-xs font-bold text-zinc-500 hover:text-orange-500 flex items-center gap-1.5 transition-colors border-l border-zinc-800 pl-4 py-1 group select-none">
+                        <span class="transform transition-transform group-hover:-translate-x-0.5">←</span> 
+                        Back to Website
+                    </a>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -57,8 +66,10 @@
         </div>
     </nav>
 
+    <!-- Main Container -->
     <main class="flex-1 flex flex-col min-h-0 w-full max-w-7xl mx-auto px-4 py-6">
         
+        <!-- LOGIN CONTAINER -->
         <div id="loginFormContainer" class="max-w-md mx-auto mt-12 w-full hidden">
             <div class="bg-zinc-900/40 border border-zinc-800 p-8 rounded-2xl shadow-2xl backdrop-blur-sm">
                 <div class="text-center mb-8">
@@ -87,6 +98,7 @@
             </div>
         </div>
 
+        <!-- SPLIT DASHBOARD LAYOUT -->
         <div id="dashboard" class="hidden flex-1 flex flex-col min-h-0 space-y-4">
             <div class="flex-shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-900 pb-3">
                 <div>
@@ -100,6 +112,7 @@
 
             <div class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-0 overflow-hidden">
                 
+                <!-- LEFT DOCK: RECEIPTS -->
                 <section class="lg:col-span-7 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden">
                     <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-amber-500 flex items-center gap-2">
@@ -112,15 +125,16 @@
                     <div id="ordersContainer" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-6"></div>
                 </section>
 
+                <!-- RIGHT DOCK: FEEDBACK (CHAT BUBBLE STYLING) -->
                 <section class="lg:col-span-5 flex flex-col min-h-0 bg-zinc-950/20 border border-zinc-900/60 rounded-2xl overflow-hidden">
                     <div class="flex-shrink-0 flex items-center justify-between bg-[#111113] px-4 py-3 border-b border-zinc-900">
                         <h3 class="text-xs font-bold uppercase tracking-widest text-red-500 flex items-center gap-2">
                             <span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-                            Customer Guestbook & Remarks
+                            Customer Guestbook Remarks
                         </h3>
                     </div>
                     
-                    <div id="feedbackContainer" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-3"></div>
+                    <div id="feedbackContainer" class="flex-1 overflow-y-auto custom-scroll p-4 space-y-4 flex flex-col"></div>
                 </section>
 
             </div>
@@ -299,7 +313,7 @@
             }
         }
 
-async function loadFeedbackOnly() {
+        async function loadFeedbackOnly() {
             const feedbackContainer = document.getElementById('feedbackContainer');
             feedbackContainer.innerHTML = `<div class="py-8 text-center text-xs text-zinc-500 uppercase tracking-wider">Syncing Remarks...</div>`;
 
@@ -331,7 +345,6 @@ async function loadFeedbackOnly() {
                     const fbText = fb.review_text || '';
                     const orderRef = fb.category ? `${fb.category.toUpperCase()} REVIEW` : 'Guest Review';
                     
-                    // Extract and format stars (defaults to 5 if field is empty or missing)
                     const rating = parseInt(fb.stars || fb.rating || 5);
                     let starsHTML = '';
                     for (let i = 1; i <= 5; i++) {
@@ -344,29 +357,23 @@ async function loadFeedbackOnly() {
 
                     if (fbText.trim() !== "") {
                         const fbCard = document.createElement('div');
-                        // Chat bubble layout wrapper container
                         fbCard.className = "flex flex-col space-y-1 max-w-[85%] group relative";
                         
                         fbCard.innerHTML = `
-                            <!-- Sender Meta Info label (Above the bubble) -->
                             <div class="flex items-center gap-2 px-2 text-[10px]">
                                 <span class="font-bold text-zinc-300">${fbUser}</span>
                                 <span class="text-zinc-600 font-medium mono text-[9px] bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800/40">${orderRef}</span>
                             </div>
 
-                            <!-- Chat Bubble Body Container -->
                             <div class="bg-zinc-900 border border-zinc-800 text-zinc-100 p-3.5 rounded-2xl rounded-tl-none shadow-md relative transition-all group-hover:border-zinc-700">
-                                <!-- Star Layout Row Layer -->
                                 <div class="flex items-center gap-1 mb-1.5">
                                     ${starsHTML}
                                 </div>
                                 
-                                <!-- Text Message Row Layer -->
                                 <p class="text-xs text-zinc-200 font-medium leading-relaxed break-words pr-4">
                                     "${fbText}"
                                 </p>
 
-                                <!-- Void Controls Layer inside bubble (Appears cleanly on hover state) -->
                                 <div class="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <button onclick="deleteFeedback(${fb.id})" class="bg-zinc-950/80 hover:bg-red-950 text-zinc-500 hover:text-red-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-zinc-800 hover:border-red-900 transition-all uppercase font-sans">
                                         Void
@@ -374,68 +381,9 @@ async function loadFeedbackOnly() {
                                 </div>
                             </div>
 
-                            <!-- Timestamp Info footer (Below the bubble) -->
                             <div class="px-2 text-[9px] text-zinc-500 flex items-center gap-1 mono">
                                 <span>${formatDateTime(fb.created_at || fb.timestamp)}</span>
                             </div>
-                        `;
-                        feedbackContainer.appendChild(fbCard);
-                    }
-                });
-
-                if (feedbackContainer.children.length === 0) {
-                    feedbackContainer.innerHTML = `<div class="text-center py-8 text-zinc-600 text-xs italic">No text found in feedback records.</div>`;
-                }
-            } catch (err) {
-                feedbackContainer.innerHTML = '<div class="text-red-500 text-xs py-4 text-center">Feedback channel connection error.</div>';
-            }
-        }
-
-        async function loadFeedbackOnly() {
-            const feedbackContainer = document.getElementById('feedbackContainer');
-            feedbackContainer.innerHTML = `<div class="py-8 text-center text-xs text-zinc-500 uppercase tracking-wider">Syncing Remarks...</div>`;
-
-            try {
-                const res = await fetch(`${SUPABASE_URL}/rest/v1/feedback?select=*&order=id.desc`, {
-                    method: 'GET',
-                    headers: {
-                        'apikey': SUPABASE_KEY,
-                        'Authorization': `Bearer ${sessionToken}`,
-                        'Content-Type': 'application/json'
-                    }
-                });
-                const comments = await res.json();
-
-                if (!comments || comments.length === 0) {
-                    feedbackContainer.innerHTML = `<div class="text-center py-8 text-zinc-600 text-xs italic">No user feedback left yet.</div>`;
-                    return;
-                }
-
-                feedbackContainer.innerHTML = '';
-
-                comments.forEach(fb => {
-                    const fbUser = fb.customer_name || 'Anonymous Guest';
-                    const fbText = fb.review_text || '';
-                    const orderRef = fb.category ? `${fb.category.toUpperCase()} REVIEW` : 'Guest Review';
-
-                    if (fbText.trim() !== "") {
-                        const fbCard = document.createElement('div');
-                        fbCard.className = "bg-zinc-900/40 border border-zinc-800/80 p-4 rounded-xl space-y-2 relative overflow-hidden group hover:border-zinc-700 transition-colors";
-                        
-                        fbCard.innerHTML = `
-                            <div class="flex justify-between items-start relative z-10">
-                                <div>
-                                    <h5 class="text-xs font-bold text-zinc-200">${fbUser}</h5>
-                                    <span class="text-[9px] text-zinc-500 mono">${orderRef}</span>
-                                </div>
-                                <button onclick="deleteFeedback(${fb.id})" class="opacity-0 group-hover:opacity-100 bg-zinc-800 hover:bg-red-950 text-zinc-400 hover:text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-zinc-700 hover:border-red-900 transition-all uppercase font-sans">
-                                    Void
-                                </button>
-                            </div>
-                            <p class="text-xs text-amber-500/90 italic leading-relaxed pl-1 relative z-10">
-                                "${fbText}"
-                            </p>
-                            <span class="text-zinc-800/30 select-none text-4xl font-serif absolute right-3 bottom-0 group-hover:text-red-500/10 transition-colors pointer-events-none">“</span>
                         `;
                         feedbackContainer.appendChild(fbCard);
                     }
