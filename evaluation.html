@@ -299,7 +299,7 @@
             }
         }
 
-        async function loadFeedbackOnly() {
+async function loadFeedbackOnly() {
             const feedbackContainer = document.getElementById('feedbackContainer');
             feedbackContainer.innerHTML = `<div class="py-8 text-center text-xs text-zinc-500 uppercase tracking-wider">Syncing Remarks...</div>`;
 
@@ -330,25 +330,54 @@
                     const fbUser = fb.customer_name || 'Anonymous Guest';
                     const fbText = fb.review_text || '';
                     const orderRef = fb.category ? `${fb.category.toUpperCase()} REVIEW` : 'Guest Review';
+                    
+                    // Extract and format stars (defaults to 5 if field is empty or missing)
+                    const rating = parseInt(fb.stars || fb.rating || 5);
+                    let starsHTML = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= rating) {
+                            starsHTML += `<span class="text-amber-400 text-xs">★</span>`;
+                        } else {
+                            starsHTML += `<span class="text-zinc-600 text-xs">★</span>`;
+                        }
+                    }
 
                     if (fbText.trim() !== "") {
                         const fbCard = document.createElement('div');
-                        fbCard.className = "bg-zinc-900/40 border border-zinc-800/80 p-4 rounded-xl space-y-2 relative overflow-hidden group hover:border-zinc-700 transition-colors";
+                        // Chat bubble layout wrapper container
+                        fbCard.className = "flex flex-col space-y-1 max-w-[85%] group relative";
                         
                         fbCard.innerHTML = `
-                            <div class="flex justify-between items-start relative z-10">
-                                <div>
-                                    <h5 class="text-xs font-bold text-zinc-200">${fbUser}</h5>
-                                    <span class="text-[9px] text-zinc-500 mono">${orderRef}</span>
-                                </div>
-                                <button onclick="deleteFeedback(${fb.id})" class="opacity-0 group-hover:opacity-100 bg-zinc-800 hover:bg-red-950 text-zinc-400 hover:text-red-400 text-[9px] font-bold px-2 py-0.5 rounded border border-zinc-700 hover:border-red-900 transition-all uppercase font-sans">
-                                    Void
-                                </button>
+                            <!-- Sender Meta Info label (Above the bubble) -->
+                            <div class="flex items-center gap-2 px-2 text-[10px]">
+                                <span class="font-bold text-zinc-300">${fbUser}</span>
+                                <span class="text-zinc-600 font-medium mono text-[9px] bg-zinc-900 px-1.5 py-0.5 rounded border border-zinc-800/40">${orderRef}</span>
                             </div>
-                            <p class="text-xs text-amber-500/90 italic leading-relaxed pl-1 relative z-10">
-                                "${fbText}"
-                            </p>
-                            <span class="text-zinc-800/30 select-none text-4xl font-serif absolute right-3 bottom-0 group-hover:text-red-500/10 transition-colors pointer-events-none">“</span>
+
+                            <!-- Chat Bubble Body Container -->
+                            <div class="bg-zinc-900 border border-zinc-800 text-zinc-100 p-3.5 rounded-2xl rounded-tl-none shadow-md relative transition-all group-hover:border-zinc-700">
+                                <!-- Star Layout Row Layer -->
+                                <div class="flex items-center gap-1 mb-1.5">
+                                    ${starsHTML}
+                                </div>
+                                
+                                <!-- Text Message Row Layer -->
+                                <p class="text-xs text-zinc-200 font-medium leading-relaxed break-words pr-4">
+                                    "${fbText}"
+                                </p>
+
+                                <!-- Void Controls Layer inside bubble (Appears cleanly on hover state) -->
+                                <div class="absolute right-2 top-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <button onclick="deleteFeedback(${fb.id})" class="bg-zinc-950/80 hover:bg-red-950 text-zinc-500 hover:text-red-400 text-[9px] font-bold px-1.5 py-0.5 rounded border border-zinc-800 hover:border-red-900 transition-all uppercase font-sans">
+                                        Void
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Timestamp Info footer (Below the bubble) -->
+                            <div class="px-2 text-[9px] text-zinc-500 flex items-center gap-1 mono">
+                                <span>${formatDateTime(fb.created_at || fb.timestamp)}</span>
+                            </div>
                         `;
                         feedbackContainer.appendChild(fbCard);
                     }
