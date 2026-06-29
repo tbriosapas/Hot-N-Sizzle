@@ -9,7 +9,528 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <script src="navbar.js"></script><!-- tailwind_order.html (Enhanced with better animations) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order & Reserve | Hot 'N Sizzle</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Add Google Fonts link for Rubik -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
     <script src="navbar.js"></script>
+    <style>
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(234, 88, 12, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(234, 88, 12, 0.6); }
+        }
+        
+        .animate-slide-in { animation: slide-in 0.4s ease-out; }
+        .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(234, 88, 12, 0.2);
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(234, 88, 12, 0.5);
+            transform: scale(1.02);
+        }
+        
+        .quantity-btn {
+            transition: all 0.2s ease;
+        }
+        .quantity-btn:hover {
+            transform: scale(1.15);
+            background: #ea580c;
+        }
+        
+        .active-tab {
+            background-color: #ea580c;
+            color: white;
+            box-shadow: 0 0 15px rgba(234, 88, 12, 0.4);
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #ea580c; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #27272a; }
+    </style>
+</head>
+<body class="text-white bg-zinc-950">
+
+    <div class="flex flex-col lg:flex-row min-h-screen pt-0">
+        
+ <main class="w-full lg:w-2/3 p-6 md:p-12 overflow-y-auto">
+    <header class="mb-10 animate-slide-in">
+        <h1 class="text-4xl font-black italic text-orange-500 uppercase tracking-tighter mb-2">Hot 'N Sizzle Menu</h1>
+        <p class="text-zinc-400">Select your items and choose service type on the right.</p>
+    </header>
+<!-- sizzling plates -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Sizzling Plates</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sizzling Bangus', 190)">
+            <img src="Sizzling bangus.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sizzling bangus">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sizzling Bangus</h3>
+                <p class="text-orange-500 font-black text-xl">₱190</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- sizzling tuna -->
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sizzling Tuna', 200)">
+            <img src="Sizzling Tuna.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sizzling tuna">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sizzling Tuna</h3>
+                <p class="text-orange-500 font-black text-xl">₱200</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- family bowls -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Family Bowls</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Bulalo Special', 350)">
+            <img src="bulalo.jpg" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Bulalo">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Bulalo Special</h3>
+                <p class="text-orange-500 font-black text-xl">₱350</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- kare-kare -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Kare-Kare', 380)">
+            <img src="kare-kare.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="kare-kare">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Kare-Kare</h3>
+                <p class="text-orange-500 font-black text-xl">₱380</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- sinigang na baboy -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sinigang na Baboy', 320)">
+            <img src="sinigang na baboy.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sinigang na baboy">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sinigang na baboy</h3>
+                <p class="text-orange-500 font-black text-xl">₱320</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- crispy pata -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Crispy Pata', 450)">
+            <img src="crispy pata.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="crispy pata">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Crispy Pata</h3>
+                <p class="text-orange-500 font-black text-xl">₱450</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- solo meals -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Solo Meals</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- sisig solo -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Sisig solo', 75)">
+            <img src="sisig solo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="sisig solo">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Sisig solo</h3>
+                <p class="text-orange-500 font-black text-xl">₱75</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- tapsilog -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Tapsilog', 120)">
+            <img src="tapsilog.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Tapsilog">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Tapsilog</h3>
+                <p class="text-orange-500 font-black text-xl">₱120</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- longsilog -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Longsilog', 95)">
+            <img src="longsilog.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Longsilog">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Longsilog</h3>
+                <p class="text-orange-500 font-black text-xl">₱95</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- liempo steak -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Liempo Steak', 105)">
+            <img src="liempo.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Liempo Steak">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Liempo Steak</h3>
+                <p class="text-orange-500 font-black text-xl">₱105</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- chicken steak -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Chicken Steak', 95)">
+            <img src="chicken steak.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="chicken Steak">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Chicken Steak</h3>
+                <p class="text-orange-500 font-black text-xl">₱95</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- pork bbq -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Pork Barbecue', 85)">
+            <img src="Pork BBQ.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="pork bbq">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Pork Barbecue</h3>
+                <p class="text-orange-500 font-black text-xl">₱85</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Drinks</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- mango shake -->
+                <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Mango Shake', 85)">
+            <img src="mango shake.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Mango Shake">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Mango Shake</h3>
+                <p class="text-orange-500 font-black text-xl">₱85</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- iced tea -->
+        <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Iced Tea', 45)">
+            <img src="Iced tea.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="Ice Tea">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Iced Tea</h3>
+                <p class="text-orange-500 font-black text-xl">₱45</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+<!-- extras -->
+    <h2 class="text-xl font-black text-white uppercase border-l-4 border-orange-600 pl-4 mb-6 italic">Extras</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+<!-- rice -->
+ <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Rice', 20)">
+            <img src="rice.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="rice">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Extra Rice</h3>
+                <p class="text-orange-500 font-black text-xl">₱20</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- garlic rice -->
+ <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Garlic Rice', 25)">
+            <img src="garlic rice.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="garlic rice">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">garlic Rice</h3>
+                <p class="text-orange-500 font-black text-xl">₱25</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+<!-- gravy -->
+          <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800 flex gap-4 items-center hover-lift group cursor-pointer" onclick="addToOrder('Gravy', 15)">
+            <img src="gravy.png" class="w-24 h-24 rounded-lg object-cover bg-zinc-800" alt="gravy">
+            <div class="flex-1">
+                <h3 class="font-bold uppercase group-hover:text-orange-500 transition-colors">Extra Gravy</h3>
+                <p class="text-orange-500 font-black text-xl">₱15</p>
+            </div>
+            <button class="bg-orange-600 w-10 h-10 rounded-full flex items-center justify-center hover:scale-110"><i class="fas fa-plus"></i></button>
+        </div>
+        </div>
+</main>
+
+        <aside class="w-full lg:w-1/3 bg-black border-l border-zinc-800 p-8 flex flex-col gap-8 sticky top-0 h-screen overflow-y-auto">
+            
+            <section class="animate-slide-in">
+                <h2 class="text-xl font-black uppercase mb-4 border-b border-orange-600 pb-2 italic text-orange-500">Your Tray</h2>
+                <div id="order-list" class="space-y-3 mb-4 max-h-60 overflow-y-auto custom-scrollbar pr-2">
+                    <p class="text-zinc-500 italic text-sm text-center py-8">Your tray is empty...</p>
+                </div>
+                <div class="border-t border-zinc-800 pt-4">
+                    <div class="flex justify-between font-black text-2xl">
+                        <span>TOTAL:</span>
+                        <span class="text-orange-500  px-3">₱<span id="total-price">0</span></span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="flex bg-zinc-900 p-1 rounded-lg border border-zinc-800">
+                <button id="dine-in-btn" onclick="setService('dine-in')" class="flex-1 py-3 text-xs font-black uppercase rounded-md transition active-tab">Dine In</button>
+                <button id="take-out-btn" onclick="setService('take-out')" class="flex-1 py-3 text-xs font-black uppercase rounded-md transition text-zinc-500 hover:text-white">Take Out</button>
+            </div>
+
+            <section id="form-container" class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover-lift">
+                <div id="reservation-fields">
+                    <h2 class="text-lg font-black uppercase mb-4 text-orange-500 text-center italic">Table Reservation</h2>
+                    <form class="space-y-4" onsubmit="submitOrder(event)">
+                        <input type="text" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Full Name" required>
+                        <input type="text" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Contact Number or FB Account Link" required>
+                        <p class="text-[10px] text-zinc-500 italic uppercase leading-tight px-1">* We will only use this to contact you if there is a delay or issue with your reservation.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="date" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
+                            <input type="time" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
+                        </div>
+                        <input type="number" placeholder="Number of Guests" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required min="1" max="20">
+                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase tracking-widest text-sm rounded-lg hover:bg-orange-700 btn-glow transition-all">
+                            Confirm Dine-In
+                        </button>
+                    </form>
+                </div>
+
+                <div id="takeout-fields" class="hidden">
+                    <h2 class="text-lg font-black uppercase mb-4 text-orange-500 text-center italic">Take Out Info</h2>
+                    <form class="space-y-4" onsubmit="submitOrder(event)">
+                        <input type="text" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Your Name" required>
+                        <input type="tel" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Contact Number" required>
+                        <p class="text-[10px] text-zinc-500 italic uppercase text-center">Ready for pickup in 15-20 mins</p>
+                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase tracking-widest text-sm rounded-lg hover:bg-orange-700 btn-glow transition-all">
+                            Place Pickup Order
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+        </aside>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 right-8 bg-orange-600 text-white px-6 py-4 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-50 font-bold flex items-center gap-2">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Added to order!</span>
+    </div>
+
+   <script>
+        // =============================================
+        // SUPABASE CONFIG — replace with your own keys
+        // =============================================
+        const SUPABASE_URL = 'https://zcjzuduvquazmkpxzwwf.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpjanp1ZHV2cXVhem1rcHh6d3dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNDEyMzEsImV4cCI6MjA5NDgxNzIzMX0.j30hzrpg23V0qILblJYrPOIoXK-wz9zPFrcfOWVBvnU';
+
+        let order = [];
+        let total = 0;
+        let currentService = 'dine-in';
+
+        function addToOrder(name, price) {
+            const existingItem = order.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty++;
+            } else {
+                order.push({ name, price, qty: 1 });
+            }
+            updateOrderUI();
+            showToast(`${name} added!`);
+        }
+
+        function updateQuantity(name, change) {
+            const item = order.find(i => i.name === name);
+            if(item) {
+                item.qty += change;
+                if(item.qty <= 0) {
+                    order = order.filter(i => i.name !== name);
+                }
+            }
+            updateOrderUI();
+        }
+
+        function updateOrderUI() {
+            const list = document.getElementById('order-list');
+            const totalEl = document.getElementById('total-price');
+            
+            if (order.length === 0) {
+                list.innerHTML = '<p class="text-zinc-500 italic text-sm text-center py-8">Your tray is empty...</p>';
+                totalEl.innerText = "0";
+                return;
+            }
+            
+            list.innerHTML = '';
+            total = 0;
+            
+            order.forEach((item, index) => {
+                total += (item.price * item.qty);
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-zinc-950 p-3 rounded-lg border border-zinc-800 animate-slide-in';
+                div.style.animationDelay = `${index * 0.05}s`;
+                div.innerHTML = `
+                    <div class="flex gap-3 items-center">
+                        <div class="flex gap-1">
+                            <button onclick="updateQuantity('${item.name}', -1)" class="quantity-btn w-6 h-6 rounded bg-zinc-800 text-white flex items-center justify-center text-xs">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="text-orange-500 font-bold w-6 text-center">${item.qty}</span>
+                            <button onclick="updateQuantity('${item.name}', 1)" class="quantity-btn w-6 h-6 rounded bg-zinc-800 text-white flex items-center justify-center text-xs">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <span class="font-bold text-sm">${item.name}</span>
+                    </div>
+                    <span class="font-bold text-orange-500">₱${item.price * item.qty}</span>
+                `;
+                list.appendChild(div);
+            });
+            
+            totalEl.innerText = total;
+        }
+
+        function setService(type) {
+            currentService = type;
+            const resFields = document.getElementById('reservation-fields');
+            const toFields = document.getElementById('takeout-fields');
+            const dineBtn = document.getElementById('dine-in-btn');
+            const toBtn = document.getElementById('take-out-btn');
+
+            if (type === 'dine-in') {
+                resFields.classList.remove('hidden');
+                toFields.classList.add('hidden');
+                dineBtn.classList.add('active-tab');
+                dineBtn.classList.remove('text-zinc-500');
+                toBtn.classList.remove('active-tab');
+                toBtn.classList.add('text-zinc-500');
+            } else {
+                resFields.classList.add('hidden');
+                toFields.classList.remove('hidden');
+                toBtn.classList.add('active-tab');
+                toBtn.classList.remove('text-zinc-500');
+                dineBtn.classList.remove('active-tab');
+                dineBtn.classList.add('text-zinc-500');
+            }
+        }
+
+        // 1. UPDATE YOUR SUPABASE POST FUNCTION TO FORCIBLY RETURN THE INSERTED DATA
+        async function supabasePost(table, data) {
+            const url = `${SUPABASE_URL}/rest/v1/${table}`;
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': `Bearer ${SUPABASE_KEY}`,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=representation' 
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errText = await response.text();
+                throw new Error(`Supabase Error [${table}]: ${errText}`);
+            }
+
+            return await response.json();
+        }
+
+        // 2. FIXED SUBMIT FUNCTION MATCHING YOUR SCHEMA CONSTRAINT
+        async function submitOrder(e) {
+            e.preventDefault();
+            if(order.length === 0) {
+                showToast('Please add items first!');
+                return;
+            }
+
+            const form = e.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            try {
+               // 1. Grab inputs from the currently active form
+const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
+const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
+
+const orderData = {
+    customer_name: nameInput ? nameInput.value : '',
+    service_type: currentService,
+    total_amount: total,
+    status: 'pending'
+};
+
+if (currentService === 'dine-in') {
+    const dateInput = form.querySelector('input[type="date"]');
+    const timeInput = form.querySelector('input[type="time"]');
+    const guestsInput = form.querySelector('input[type="number"]');
+
+    orderData.reservation_date = dateInput ? dateInput.value : null; 
+    orderData.reservation_time = timeInput ? timeInput.value : null;  
+    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
+
+    // For Dine-In: Save to 'contact info' and leave 'contact' empty
+    orderData['contact info'] = contactInput ? contactInput.value : null;
+    orderData.contact = null; 
+} else {
+    // For Take-Out: Save to 'contact' and leave Dine-In fields empty
+    orderData.reservation_date = null;
+    orderData.reservation_time = null;
+    orderData.guests = null;
+    orderData['contact info'] = null;
+
+    orderData.contact = contactInput ? contactInput.value : null; 
+}
+
+                console.log("Sending to orders table:", orderData);
+                const createdOrderArray = await supabasePost('orders', orderData);
+                console.log("Supabase responded with:", createdOrderArray);
+
+                if (!createdOrderArray || createdOrderArray.length === 0) {
+                    throw new Error("Supabase inserted the row but didn't return data.");
+                }
+                
+                const newOrderId = createdOrderArray[0].id; 
+                if (!newOrderId) {
+                    throw new Error("Could not read 'id' from the returned order row.");
+                }
+
+                // FIXED KEY: Changed 'order_id' to 'id' to satisfy constraint 'order_items_id_fkey'
+// Leave 'id' out so Supabase autogenerates it. Use your foreign key column (usually order_id) instead!
+const orderItemsData = order.map(item => ({
+    order_id: newOrderId, // Change this to match your exact foreign key column name in order_items
+    item_name: item.name,
+    qty: item.qty,
+    price: item.price
+}));
+
+                console.log("Sending to order_items table:", orderItemsData);
+                await supabasePost('order_items', orderItemsData);
+
+                showToast(`Order confirmed! Total: ₱${total}`);
+                setTimeout(() => {
+                    order = [];
+                    updateOrderUI();
+                    form.reset();
+                    submitBtn.textContent = currentService === 'dine-in' ? 'Confirm Dine-In' : 'Place Pickup Order';
+                    submitBtn.disabled = false;
+                }, 2000);
+
+            } catch(err) {
+                console.error('Detailed Order Process Failure:', err);
+                showToast('Error saving order. Check console logs.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 2500);
+        }
+
+        document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
+    </script>
+</body>
+</html>
     <style>
         body { font-family: 'Rubik', sans-serif; background-color: #0d0d0d; color: white; }
         @keyframes slide-in { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
