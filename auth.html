@@ -116,6 +116,7 @@
         }
 
         async function handleAuthSubmit(e) {
+
             e.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
@@ -130,16 +131,18 @@
 
             // Build request body payload context
             let requestBody = { email, password };
-            
+          
             // If registering, attach metadata options so database triggers can parse custom profile attributes safely
-            if (isSignUpMode) {
-                requestBody.options = {
-                    data: {
-                        full_name: name,
-                        phone_number: phone
-                    }
-                };
-            }
+           if (isSignUpMode) {
+    requestBody.options = {
+        // Change "data" to "user_metadata" so Supabase extracts it correctly
+        user_metadata: {
+            full_name: name,
+            phone_number: phone
+        },
+        emailRedirectTo: `${window.location.origin}${window.location.pathname}?redirect=${encodeURIComponent(getRedirectTarget())}`
+    };
+}
 
             try {
                 const response = await fetch(`${SUPABASE_URL}/auth/v1/${endpoint}`, {
@@ -148,31 +151,37 @@
                     body: JSON.stringify(requestBody)
                 });
                 const data = await response.json();
-                if(!response.ok) throw new Error(data.msg || data.error_description || "Authentication failure");
-
+                if(!response.ok) throw new Error(data.msg || data.message || data.error_description || JSON.stringify(data));
                 if(isSignUpMode) {
                     showToast("📩 Verification email sent!");
-                    alert("Verification link sent! Check your email inbox to confirm your registration.");
+                    alert("Verification link sent! Check your email inbox to confirm your registration. You'll be brought back here automatically once you click the link.");
                 } else {
-                    localStorage.setItem('cust_token', data.access_token);
-                    localStorage.setItem('sb_user_id', data.user.id);
-
-                    // Fetch the user's details from your user profiles table
+                    // Fetch the user's profile FIRST so we can check if the account is blocked
+                    // before granting access.
                     const profileRes = await fetch(`${SUPABASE_URL}/rest/v1/users_profile?select=*`, {
                         headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${data.access_token}` }
                     });
                     const profiles = await profileRes.json();
-                    
-                    if (profiles && profiles[0]) {
-                        localStorage.setItem('cust_name', profiles[0].full_name);
-                        localStorage.setItem('cust_phone', profiles[0].phone_number);
+                    const myProfile = profiles && profiles[0] ? profiles[0] : null;
+
+                    if (myProfile && myProfile.blocked) {
+                        throw new Error("This account has been blocked. Please contact Hot 'N Sizzle if you believe this is a mistake.");
+                    }
+
+                    localStorage.setItem('cust_token', data.access_token);
+                    localStorage.setItem('sb_user_id', data.user.id);
+                    localStorage.setItem('cust_email', data.user.email);
+
+                    if (myProfile) {
+                        localStorage.setItem('cust_name', myProfile.full_name || data.user.email.split('@')[0]);
+                        localStorage.setItem('cust_phone', myProfile.phone_number || '');
                     } else {
                         // Fallback placeholder parsing from account string if empty
                         localStorage.setItem('cust_name', data.user.email.split('@')[0]);
                     }
                     
                     showToast("✅ Authenticated!");
-                    setTimeout(() => window.location.href = "order.html", 1000);
+                    setTimeout(() => window.location.href = getRedirectTarget(), 1000);
                 }
             } catch(err) {
                 alert(err.message);
@@ -182,6 +191,15 @@
             }
         }
 
+        // Reads ?redirect=order.html (or feedback.html) so a guest who was
+        // bounced here from a gated link lands back where they wanted to go.
+        function getRedirectTarget() {
+            const params = new URLSearchParams(window.location.search);
+            const target = params.get('redirect');
+            const allowed = ['order.html', 'feedback.html'];
+            return allowed.includes(target) ? target : 'order.html';
+        }
+
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
@@ -189,16 +207,41 @@
             setTimeout(() => toast.classList.add('translate-y-24', 'opacity-0'), 2500);
         }
 
-        // Catch incoming email link confirmation token redirection
+        // Catch incoming email link confirmation token redirection.
+        // Supabase redirects the verification link back to this page with
+        // #access_token=... in the URL hash — we log the customer in
+        // automatically and send them straight to where they wanted to go.
         (() => {
             const hash = window.location.hash;
             if (hash && hash.includes('access_token=')) {
                 const params = new URLSearchParams(hash.replace('#', '?'));
                 const token = params.get('access_token');
                 if (token) {
-                    localStorage.setItem('cust_token', token);
-                    alert("Email verified successfully! You can now log in seamlessly.");
-                    window.location.hash = "";
+                    (async () => {
+                        localStorage.setItem('cust_token', token);
+                        window.location.hash = "";
+                        try {
+                            const userRes = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+                                headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+                            });
+                            const user = await userRes.json();
+                            if (user && user.id) {
+                                localStorage.setItem('sb_user_id', user.id);
+                                localStorage.setItem('cust_email', user.email);
+                                const profileRes = await fetch(`${SUPABASE_URL}/rest/v1/users_profile?select=*`, {
+                                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${token}` }
+                                });
+                                const profiles = await profileRes.json();
+                                if (profiles && profiles[0]) {
+                                    localStorage.setItem('cust_name', profiles[0].full_name || user.email.split('@')[0]);
+                                    localStorage.setItem('cust_phone', profiles[0].phone_number || '');
+                                }
+                            }
+                        } catch (e) { /* profile fetch best-effort, ignore */ }
+
+                        showToast("✅ Email verified! Taking you in...");
+                        setTimeout(() => window.location.href = getRedirectTarget(), 1200);
+                    })();
                 }
             }
         })();
