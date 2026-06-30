@@ -188,29 +188,45 @@ function manageGlobalNavbar() {
     // Check if the user is authenticated
     const isLoggedIn = !!localStorage.getItem('cust_token');
     
-    // Select all links inside your navigation container
-    const navLinks = document.querySelectorAll('nav a, .navbar a, #nav-menu a');
+    // Select all links and layout buttons inside the navbar components
+    const navElements = document.querySelectorAll('nav a, .navbar a, #mobileMenuPanel a');
     
-    navLinks.forEach(link => {
-        const linkText = link.textContent.trim().toLowerCase();
+    navElements.forEach(el => {
+        const text = el.textContent.trim().toLowerCase();
+        const href = el.getAttribute('href') || '';
         
-        // MODIFIED: Checks if the link text CONTAINS 'order' or equals 'feedback'
-        if (linkText.includes('order') || linkText === 'feedback') {
+        // Target anything linking directly to order.html or feedback.html, 
+        // or anything containing keywords like 'order', 'feedback', or 'reserve'
+        if (
+            href.includes('order.html') || 
+            href.includes('feedback.html') ||
+            text.includes('order') || 
+            text.includes('feedback') || 
+            text.includes('reserve')
+        ) {
             if (isLoggedIn) {
-                link.style.display = ''; 
-                link.classList.remove('hidden'); 
+                el.style.display = ''; 
+                el.classList.remove('hidden'); 
             } else {
-                link.style.display = 'none'; 
-                link.classList.add('hidden'); 
+                el.style.display = 'none'; 
+                el.classList.add('hidden'); 
             }
         }
     });
 }
 
-// Automatically trigger the visibility sweep on every single page load
+// Intercept window loading states securely
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', manageGlobalNavbar);
 } else {
     manageGlobalNavbar();
 }
+
+// Overwrite the existing window.onload to ensure creation happens FIRST, then visibility follows
+window.onload = function() {
+    if (typeof createNavbar === 'function') {
+        createNavbar();
+    }
+    manageGlobalNavbar();
+};
 window.onload = createNavbar;
