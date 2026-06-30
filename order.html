@@ -259,21 +259,44 @@
                 <button id="take-out-btn" onclick="setService('take-out')" class="flex-1 py-3 text-xs font-black uppercase rounded-md transition text-zinc-500 hover:text-white">Take Out</button>
             </div>
 
-            <section id="form-container" class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover-lift">
+ <section id="form-container" class="bg-zinc-900 p-6 rounded-2xl border border-zinc-800 hover-lift">
+                <!-- Dine-In Reservation Fields -->
                 <div id="reservation-fields">
                     <h2 class="text-lg font-black uppercase mb-4 text-orange-500 text-center italic">Table Reservation</h2>
                     <form class="space-y-4" onsubmit="submitOrder(event)">
-                        <input type="text" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Full Name" required>
-                        <input type="text" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" placeholder="Contact Number or FB Account Link" required>
-                        <p class="text-[10px] text-zinc-500 italic uppercase leading-tight px-1">* We will only use this to contact you if there is a delay or issue with your reservation.</p>
+                        <input type="text" id="dineInName" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors text-zinc-400 font-bold" required placeholder="Full Name">
                         <div class="grid grid-cols-2 gap-4">
-                            <input type="date" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
-                            <input type="time" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
+                            <input type="date" id="dineInDate" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
+                            <input type="time" id="dineInTime" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required>
                         </div>
-                        <input type="number" placeholder="Number of Guests" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required min="1" max="20">
+                        <input type="number" id="dineInGuests" placeholder="Number of Guests" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors" required min="1" max="20">
+                        
+                        <p class="text-[11px] text-orange-500/90 italic font-medium leading-tight text-center px-1 py-1 bg-orange-950/20 rounded border border-orange-900/30">
+                            * Note: Your order reservation will be confirmed once a confirmation email has been sent to you.
+                        </p>
+
                         <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase tracking-widest text-sm rounded-lg hover:bg-orange-700 btn-glow transition-all">
-                            Confirm Dine-In
+                            Confirm
                         </button>
+                    </form>
+                </div>
+
+                <!-- Take Out Fields (Contact input removed) -->
+                <div id="takeout-fields" class="hidden">
+                    <h2 class="text-lg font-black uppercase mb-4 text-orange-500 text-center italic">Take Out Info</h2>
+                    <form class="space-y-4" onsubmit="submitOrder(event)">
+                        <input type="text" id="takeoutName" class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 transition-colors text-zinc-400 font-bold"  required placeholder="Your Name">
+                        
+                        <p class="text-[11px] text-orange-500/90 italic font-medium leading-tight text-center px-1 py-1 bg-orange-950/20 rounded border border-orange-900/30">
+                            * Note: Your take out order will be confirmed once a confirmation email has been sent to you.
+                        </p>
+
+                        <button type="submit" class="w-full bg-orange-600 py-4 font-black uppercase tracking-widest text-sm rounded-lg hover:bg-orange-700 btn-glow transition-all">
+                            Place Pickup Order
+                        </button>
+                    </form>
+                </div>
+            </section>
                     </form>
                 </div>
 
@@ -418,95 +441,104 @@
         }
 
         // 2. FIXED SUBMIT FUNCTION MATCHING YOUR SCHEMA CONSTRAINT
-        async function submitOrder(e) {
+async function submitOrder(e) {
             e.preventDefault();
-            if(order.length === 0) {
-                showToast('Please add items first!');
+            
+            const token = localStorage.getItem('cust_token');
+            if(!token) {
+                alert("🔒 Access Denied: You must be logged in to place an order or make a table reservation.");
+                window.location.href = "auth.html";
                 return;
             }
 
-            const form = e.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Saving...';
-            submitBtn.disabled = true;
+            if(order.length === 0) { 
+                showToast('Please select items first!'); 
+                return; 
+            }
+
+            // --- ADDED POPUP WARNING BEFORE PROCESSING ---
+            const noticeMessage = currentService === 'dine-in' 
+                ? "📢 Notice: Your table reservation and order are NOT yet confirmed.\n\nIt will only be officially confirmed once you receive a confirmation email from Hot 'N Sizzle via Supabase. Do you wish to proceed?"
+                : "📢 Notice: Your take-out order is NOT yet confirmed.\n\nIt will only be officially confirmed once you receive a confirmation email from Hot 'N Sizzle via Supabase. Do you wish to proceed?";
+
+            if (!confirm(noticeMessage)) {
+                return; // Stops the submission if they click 'Cancel'
+            }
+            // ----------------------------------------------
+
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Processing Order...';
+            btn.disabled = true;
 
             try {
-               // 1. Grab inputs from the currently active form
-const nameInput = form.querySelector('input[placeholder*="Name"]') || form.querySelectorAll('input')[0];
-const contactInput = form.querySelector('input[placeholder*="Contact"]') || form.querySelectorAll('input')[1];
+                // Read names dynamically from the newly editable text inputs
+                const customerName = currentService === 'dine-in' 
+                    ? document.getElementById('dineInName').value 
+                    : document.getElementById('takeoutName').value;
 
-const orderData = {
-    customer_name: nameInput ? nameInput.value : '',
-    service_type: currentService,
-    total_amount: total,
-    status: 'pending'
-};
+                const payload = {
+                    user_id: localStorage.getItem('sb_user_id'),
+                    customer_name: customerName,
+                    service_type: currentService,
+                    total_amount: total,
+                    status: 'pending',
+                    contact: localStorage.getItem('cust_phone') || ''
+                };
 
-if (currentService === 'dine-in') {
-    const dateInput = form.querySelector('input[type="date"]');
-    const timeInput = form.querySelector('input[type="time"]');
-    const guestsInput = form.querySelector('input[type="number"]');
-
-    orderData.reservation_date = dateInput ? dateInput.value : null; 
-    orderData.reservation_time = timeInput ? timeInput.value : null;  
-    orderData.guests = guestsInput ? parseInt(guestsInput.value) : 0; 
-
-    // For Dine-In: Save to 'contact info' and leave 'contact' empty
-    orderData['contact info'] = contactInput ? contactInput.value : null;
-    orderData.contact = null; 
-} else {
-    // For Take-Out: Save to 'contact' and leave Dine-In fields empty
-    orderData.reservation_date = null;
-    orderData.reservation_time = null;
-    orderData.guests = null;
-    orderData['contact info'] = null;
-
-    orderData.contact = contactInput ? contactInput.value : null; 
-}
-
-                console.log("Sending to orders table:", orderData);
-                const createdOrderArray = await supabasePost('orders', orderData);
-                console.log("Supabase responded with:", createdOrderArray);
-
-                if (!createdOrderArray || createdOrderArray.length === 0) {
-                    throw new Error("Supabase inserted the row but didn't return data.");
+                if(currentService === 'dine-in') {
+                    payload.reservation_date = document.getElementById('dineInDate').value;
+                    payload.reservation_time = document.getElementById('dineInTime').value;
+                    payload.guests = parseInt(document.getElementById('dineInGuests').value) || 1;
                 }
+
+                const res = await fetch(`${SUPABASE_URL}/rest/v1/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=representation'
+                    },
+                    body: JSON.stringify(payload)
+                });
                 
-                const newOrderId = createdOrderArray[0].id; 
-                if (!newOrderId) {
-                    throw new Error("Could not read 'id' from the returned order row.");
+                if(!res.ok) throw new Error("Could not authenticate order profile. Action restricted.");
+                const savedOrder = await res.json();
+
+                const itemsPayload = order.map(i => ({
+                    order_id: savedOrder[0].id,
+                    item_name: i.name,
+                    qty: i.qty,
+                    price: i.price
+                }));
+
+                await fetch(`${SUPABASE_URL}/rest/v1/order_items`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(itemsPayload)
+                });
+
+                // Tailored success alerts reminding them about the email setup
+                if (currentService === 'dine-in') {
+                    alert("🎉 Reservation submitted! Please check your email inbox shortly for your Supabase confirmation message.");
+                } else {
+                    alert("🎉 Take-out order submitted! Please check your email inbox shortly for your Supabase pickup confirmation.");
                 }
 
-                // FIXED KEY: Changed 'order_id' to 'id' to satisfy constraint 'order_items_id_fkey'
-// Leave 'id' out so Supabase autogenerates it. Use your foreign key column (usually order_id) instead!
-const orderItemsData = order.map(item => ({
-    order_id: newOrderId, // Change this to match your exact foreign key column name in order_items
-    item_name: item.name,
-    qty: item.qty,
-    price: item.price
-}));
-
-                console.log("Sending to order_items table:", orderItemsData);
-                await supabasePost('order_items', orderItemsData);
-
-                showToast(`Order confirmed! Total: ₱${total}`);
-                setTimeout(() => {
-                    order = [];
-                    updateOrderUI();
-                    form.reset();
-                    submitBtn.textContent = currentService === 'dine-in' ? 'Confirm Dine-In' : 'Place Pickup Order';
-                    submitBtn.disabled = false;
-                }, 2000);
-
+                order = []; 
+                updateOrderUI();
             } catch(err) {
-                console.error('Detailed Order Process Failure:', err);
-                showToast('Error saving order. Check console logs.');
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                alert(err.message);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
             }
         }
-
         function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').textContent = message;
@@ -515,8 +547,46 @@ const orderItemsData = order.map(item => ({
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 2500);
         }
+        // Pulls authenticated user information into the read-only inputs
+        function initializeUserProfile() {
+            const savedName = localStorage.getItem('cust_name') || '';
+            const dineInField = document.getElementById('dineInName');
+            const takeoutField = document.getElementById('takeoutName');
+            
+            if (dineInField) dineInField.value = savedName;
+            if (takeoutField) takeoutField.value = savedName;
+        }
 
-        document.querySelector('input[type="date"]').min = new Date().toISOString().split('T')[0];
+        // Run when page DOM tree is ready
+        window.addEventListener('DOMContentLoaded', initializeUserProfile);
+
+        // Change the original date constraint line to match the new ID element:
+        document.getElementById('dineInDate').min = new Date().toISOString().split('T')[0];
+
+        // Dynamic Navigation Visibility Control
+        function updateNavbarVisibility() {
+            // Check if the user's login token exists
+            const isLoggedIn = !!localStorage.getItem('cust_token');
+            
+            // Find all link elements in your navigation bar
+            const navLinks = document.querySelectorAll('nav a, header a, .navbar a');
+            
+            navLinks.forEach(link => {
+                const text = link.textContent.trim().toLowerCase();
+                
+                // Target 'order' and 'feedback' links specifically
+                if (text === 'order' || text === 'feedback') {
+                    if (isLoggedIn) {
+                        link.classList.remove('hidden'); // Show if logged in
+                    } else {
+                        link.classList.add('hidden');    // Hide if not logged in
+                    }
+                }
+            });
+        }
+
+        // Run the visibility check as soon as the page loads
+        window.addEventListener('DOMContentLoaded', updateNavbarVisibility);
     </script>
 </body>
 </html>
