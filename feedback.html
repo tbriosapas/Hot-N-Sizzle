@@ -514,6 +514,18 @@
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 3000);
         }
+        async function submitFeedback(e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem('cust_token');
+    if(!token) {
+        alert("🔒 Access Denied: Please sign in to submit authentic customer feedback.");
+        window.location.href = "auth.html";
+        return;
+    }
+
+    // ... your existing code to collect form values and save to Supabase ...
+}
     </script>
 </body>
 </html>
