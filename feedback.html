@@ -183,6 +183,13 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpjanp1ZHV2cXVhem1rcHh6d3dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNDEyMzEsImV4cCI6MjA5NDgxNzIzMX0.j30hzrpg23V0qILblJYrPOIoXK-wz9zPFrcfOWVBvnU';
 
         // =============================================
+        // LOGIN GUARD — this page requires a signed-in customer.
+        // =============================================
+        if (!localStorage.getItem('cust_token')) {
+            window.location.href = 'auth.html?redirect=feedback.html';
+        }
+
+        // =============================================
         // SUPABASE HELPER
         // =============================================
         async function supabase(method, path, body) {
@@ -208,7 +215,7 @@
         // =============================================
         let reviews = [];
         let currentRating = 5;
-        let currentUser = localStorage.getItem('hns_currentUser') || '';
+        let currentUser = localStorage.getItem('cust_name') || localStorage.getItem('hns_currentUser') || '';
 
         // =============================================
         // INIT
@@ -514,18 +521,6 @@
                 toast.classList.add('translate-y-24', 'opacity-0');
             }, 3000);
         }
-        async function submitFeedback(e) {
-    e.preventDefault();
-
-    const token = localStorage.getItem('cust_token');
-    if(!token) {
-        alert("🔒 Access Denied: Please sign in to submit authentic customer feedback.");
-        window.location.href = "auth.html";
-        return;
-    }
-
-    // ... your existing code to collect form values and save to Supabase ...
-}
     </script>
 </body>
 </html>
