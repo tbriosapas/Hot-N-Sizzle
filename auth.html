@@ -116,7 +116,6 @@
         }
 
         async function handleAuthSubmit(e) {
-
             e.preventDefault();
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
@@ -129,20 +128,19 @@
             btn.disabled = true;
             btn.textContent = 'Processing...';
 
-            // Build request body payload context
             let requestBody = { email, password };
           
-            // If registering, attach metadata options so database triggers can parse custom profile attributes safely
-           if (isSignUpMode) {
-    requestBody.options = {
-        // Change "data" to "user_metadata" so Supabase extracts it correctly
-        user_metadata: {
-            full_name: name,
-            phone_number: phone
-        },
-        emailRedirectTo: `${window.location.origin}${window.location.pathname}?redirect=${encodeURIComponent(getRedirectTarget())}`
-    };
-}
+            if (isSignUpMode) {
+                // Correctly place profile properties in the root 'data' object
+                requestBody.data = {
+                    full_name: name,
+                    phone_number: phone
+                };
+                // Correctly use snake_case for raw HTTP GoTrue endpoint routing
+                requestBody.options = {
+                    email_redirect_to: `${window.location.origin}${window.location.pathname}?redirect=${encodeURIComponent(getRedirectTarget())}`
+                };
+            }
 
             try {
                 const response = await fetch(`${SUPABASE_URL}/auth/v1/${endpoint}`, {
@@ -152,12 +150,11 @@
                 });
                 const data = await response.json();
                 if(!response.ok) throw new Error(data.msg || data.message || data.error_description || JSON.stringify(data));
+                
                 if(isSignUpMode) {
                     showToast("📩 Verification email sent!");
                     alert("Verification link sent! Check your email inbox to confirm your registration. You'll be brought back here automatically once you click the link.");
                 } else {
-                    // Fetch the user's profile FIRST so we can check if the account is blocked
-                    // before granting access.
                     const profileRes = await fetch(`${SUPABASE_URL}/rest/v1/users_profile?select=*`, {
                         headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${data.access_token}` }
                     });
@@ -176,7 +173,6 @@
                         localStorage.setItem('cust_name', myProfile.full_name || data.user.email.split('@')[0]);
                         localStorage.setItem('cust_phone', myProfile.phone_number || '');
                     } else {
-                        // Fallback placeholder parsing from account string if empty
                         localStorage.setItem('cust_name', data.user.email.split('@')[0]);
                     }
                     
