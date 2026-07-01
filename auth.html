@@ -92,15 +92,14 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpjanp1ZHV2cXVhem1rcHh6d3dmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyNDEyMzEsImV4cCI6MjA5NDgxNzIzMX0.j30hzrpg23V0qILblJYrPOIoXK-wz9zPFrcfOWVBvnU';
         let isSignUpMode = false;
 
-function toggleMode() {
+function toggleAuthMode() {
             isSignUpMode = !isSignUpMode;
             
             const title = document.getElementById('authTitle');
-            const desc = document.getElementById('authDesc');
+            const desc = document.getElementById('authSubtitle');
             const submitBtn = document.getElementById('authSubmitBtn');
             const toggleText = document.getElementById('authToggleText');
-            const nameGroup = document.getElementById('nameFieldGroup');
-            const phoneGroup = document.getElementById('phoneFieldGroup');
+            const registerFields = document.getElementById('registerFields');
             const resendContainer = document.getElementById('resendContainer');
 
             // Hide the resend container when switching modes
@@ -110,20 +109,18 @@ function toggleMode() {
                 title.textContent = "Create Account";
                 desc.textContent = "Join Hot 'N Sizzle to reserve your table and order delicious meals.";
                 submitBtn.textContent = "Confirm Registration";
-                toggleText.innerHTML = `Already have an account? <button type="button" onclick="toggleMode()" class="text-orange-500 font-bold hover:underline">Sign In</button>`;
+                toggleText.innerHTML = `Already have an account? <button type="button" onclick="toggleAuthMode()" class="text-orange-500 font-bold hover:underline">Sign In</button>`;
                 
-                nameGroup.classList.remove('hidden');
-                phoneGroup.classList.remove('hidden');
+                registerFields.classList.remove('hidden');
                 document.getElementById('authName').required = true;
                 document.getElementById('authPhone').required = true;
             } else {
                 title.textContent = "Welcome Back";
                 desc.textContent = "Sign in to access your orders, track reservations, and leave feedback.";
                 submitBtn.textContent = "Confirm Sign In";
-                toggleText.innerHTML = `New to Hot 'N Sizzle? <button type="button" onclick="toggleMode()" class="text-orange-500 font-bold hover:underline">Create Account</button>`;
+                toggleText.innerHTML = `New to Hot 'N Sizzle? <button type="button" onclick="toggleAuthMode()" class="text-orange-500 font-bold hover:underline">Create Account</button>`;
                 
-                nameGroup.classList.add('hidden');
-                phoneGroup.classList.add('hidden');
+                registerFields.classList.add('hidden');
                 document.getElementById('authName').required = false;
                 document.getElementById('authPhone').required = false;
             }
