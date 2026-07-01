@@ -540,15 +540,16 @@
                     .map(it => `${it.qty}x ${it.item_name} - ₱${it.price * it.qty}`)
                     .join('\n') || '(no items listed)';
 
-                await emailjs.send("service_vexfrwi", "template_tajekkd", {
-                    to_email: order.customer_email,
-                    customer_name: order.customer_name || 'Guest',
-                    order_id: order.id,
-                    service_type: order.service_type,
-                    items_list: itemsText,
-                    total_amount: order.total_amount,
-                    reservation_date: order.reservation_date || '',
-                    reservation_time: order.reservation_time || ''
+    // UPDATE THIS BLOCK INSIDE YOUR sendConfirmationEmail FUNCTION
+await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    to_email: order.customer_email || order.email, // Captures whichever string is active
+    customer_name: order.customer_name || order.name || 'Guest', // Fallback cascade matching your UI
+    order_id: order.id,
+    service_type: order.service_type || 'DINE-IN',
+    items_list: itemsText,
+    total_amount: order.total_bill || order.total || order.total_amount || 0, // Fallback cascade matching your UI
+    reservation_date: order.reservation_date || '',
+    reservation_time: order.reservation_time || ''
                 });
 
                 await fetch(`${SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`, {
