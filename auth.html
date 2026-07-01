@@ -60,7 +60,13 @@
                     <label class="block text-xs font-black uppercase text-white tracking-wider mb-2 border-l-2 border-orange-600 pl-2">Password</label>
                     <input type="password" id="authPassword" required class="w-full bg-black border border-zinc-700 rounded p-3 text-sm outline-none focus:border-orange-500 text-zinc-300 transition-colors" placeholder="••••••••">
                 </div>
-
+<!-- Place this right above the submit button in auth.html -->
+<div id="resendContainer" class="hidden text-center p-2 bg-zinc-950/50 border border-zinc-800 rounded mb-4">
+    <p class="text-xs text-zinc-400">Didn't get the link?</p>
+    <button type="button" onclick="handleResendConfirmation()" class="text-xs text-orange-500 font-bold hover:underline uppercase tracking-wider mt-1">
+        Click here to resend verification email
+    </button>
+</div>
                 <button type="submit" id="authSubmitBtn" class="w-full bg-orange-600 py-4 font-black uppercase tracking-widest text-sm rounded-lg hover:bg-orange-700 btn-glow transition-all duration-300 mt-2">
                     Confirm Sign In
                 </button>
@@ -181,10 +187,12 @@
                 }
             } catch(err) {
                 alert(err.message);
-            } finally {
-                btn.disabled = false;
-                btn.textContent = isSignUpMode ? "Confirm Registration" : "Confirm Sign In";
-            }
+                
+                // If the server rejects the login because the email isn't verified yet,
+                // show the hidden resend confirmation link module!
+                if (err.message.includes("Email not confirmed") || err.message.includes("confirm")) {
+                    document.getElementById('resendContainer').classList.remove('hidden');
+                }
         }
 
         // Reads ?redirect=order.html (or feedback.html) so a guest who was
@@ -195,6 +203,45 @@
             const allowed = ['order.html', 'feedback.html'];
             return allowed.includes(target) ? target : 'order.html';
         }
+
+        // 1. Function to handle resending the signup confirmation link manually
+async function handleResendConfirmation() {
+    const email = document.getElementById('authEmail').value;
+    if (!email) {
+        alert("Please enter your email address first.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${SUPABASE_URL}/auth/v1/resend`, {
+            method: 'POST',
+            headers: { 
+                'apikey': SUPABASE_KEY, 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                type: 'signup',
+                email: email,
+                options: {
+                    email_redirect_to: `${window.location.origin}${window.location.pathname}?redirect=${encodeURIComponent(getRedirectTarget())}`
+                }
+            })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.msg || data.message || "Failed to send email link.");
+        }
+
+        showToast("📩 Fresh confirmation link sent!");
+        alert("A brand new verification link has been sent to your inbox via Brevo.");
+    } catch (err) {
+        alert(err.message);
+    }
+}
+
+// 2. Update your existing error handling inside handleAuthSubmit to show the button
+// When someone tries to log in but hasn't confirmed their email, catch it like this:
 
         function showToast(message) {
             const toast = document.getElementById('toast');
