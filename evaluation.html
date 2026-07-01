@@ -540,7 +540,7 @@
                     .map(it => `${it.qty}x ${it.item_name} - ₱${it.price * it.qty}`)
                     .join('\n') || '(no items listed)';
 
-                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                await emailjs.send("service_vexfrwi", "template_tajekkd", {
                     to_email: order.customer_email,
                     customer_name: order.customer_name || 'Guest',
                     order_id: order.id,
